@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
         title: 'Cow Manager',
         debugShowCheckedModeBanner: false,
         theme: new ThemeData(
-          primarySwatch: Colors.brown,
+          primarySwatch: Colors.orange,
         ),
         home: new RootPage(auth: new Auth()));
   }
