@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/services/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -17,14 +20,45 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
+  List<Animal> _animalList;
+  Query _animalQuery;
+  StreamSubscription<Event> _onAnimalAddedSubscription;
+  StreamSubscription<Event> _onAnimalChangedSubscription;
+
   @override
   void initState() {
     super.initState();
+
+    _animalList = new List();
+    _animalQuery = _database
+        .reference()
+        .child("animais");
+    _onAnimalAddedSubscription = _animalQuery.onChildAdded.listen(onEntryAdded);
+    _onAnimalChangedSubscription = _animalQuery.onChildChanged.listen(onEntryChanged);
   }
 
   @override
   void dispose() {
+    _onAnimalAddedSubscription.cancel();
+    _onAnimalChangedSubscription.cancel();
     super.dispose();
+  }
+
+  onEntryChanged(Event event) {
+    var oldEntry = _animalList.singleWhere((entry) {
+      return entry.key == event.snapshot.key;
+    });
+
+    setState(() {
+      _animalList[_animalList.indexOf(oldEntry)] =
+          Animal.fromSnapshot(event.snapshot);
+    });
+  }
+
+  onEntryAdded(Event event) {
+    setState(() {
+      _animalList.add(Animal.fromSnapshot(event.snapshot));
+    });
   }
 
   signOut() async {
@@ -33,6 +67,44 @@ class _HomePageState extends State<HomePage> {
       widget.logoutCallback();
     } catch (e) {
       print(e);
+    }
+  }
+
+  Widget showAnimalList() {
+    if (_animalList.length > 0) {
+      return ListView.builder(
+          shrinkWrap: true,
+          itemCount: _animalList.length,
+          itemBuilder: (BuildContext context, int index) {
+            String animalId = _animalList[index].key;
+            String electronicId = _animalList[index].electronicId;
+            String earring = _animalList[index].earring;
+            String userId = _animalList[index].userId;
+            return Dismissible(
+              key: Key(animalId),
+              background: Container(color: Colors.red),
+              onDismissed: (direction) async {
+                //deleteTodo(animalId, index);
+              },
+              child: ListTile(
+                title: Text(
+                  earring,
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                trailing: Text(
+                  electronicId,
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+            );
+          });
+    } else {
+      return Center(
+          child: Text(
+            "Welcome. Your list is empty",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30.0),
+          ));
     }
   }
 
@@ -48,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: signOut)
           ],
         ),
-        //body: ,
+        body: showAnimalList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           tooltip: 'Increment',
