@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/services/authentication.dart';
+import 'package:cow_manager/view/new_animal.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -20,6 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
 
+  final _textEditingController = TextEditingController();
+
   List<Animal> _animalList;
   Query _animalQuery;
   StreamSubscription<Event> _onAnimalAddedSubscription;
@@ -30,11 +33,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _animalList = new List();
-    _animalQuery = _database
-        .reference()
-        .child("animais");
+    _animalQuery = _database.reference().child("animais");
     _onAnimalAddedSubscription = _animalQuery.onChildAdded.listen(onEntryAdded);
-    _onAnimalChangedSubscription = _animalQuery.onChildChanged.listen(onEntryChanged);
+    _onAnimalChangedSubscription =
+        _animalQuery.onChildChanged.listen(onEntryChanged);
   }
 
   @override
@@ -70,6 +72,41 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  showAddAnimalDialog(BuildContext context) async {
+    _textEditingController.clear();
+    await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: new Row(
+              children: <Widget>[
+                new Expanded(
+                    child: new TextField(
+                  controller: _textEditingController,
+                  autofocus: true,
+                  decoration: new InputDecoration(
+                    labelText: 'Add new todo',
+                  ),
+                ))
+              ],
+            ),
+            actions: <Widget>[
+              new FlatButton(
+                  child: const Text('Cancel'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              new FlatButton(
+                  child: const Text('Save'),
+                  onPressed: () {
+                    //addNewAnimal(_textEditingController.text.toString());
+                    Navigator.pop(context);
+                  })
+            ],
+          );
+        });
+  }
+
   Widget showAnimalList() {
     if (_animalList.length > 0) {
       return ListView.builder(
@@ -101,10 +138,10 @@ class _HomePageState extends State<HomePage> {
     } else {
       return Center(
           child: Text(
-            "Welcome. Your list is empty",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 30.0),
-          ));
+        "Welcome. Your list is empty",
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 30.0),
+      ));
     }
   }
 
@@ -122,8 +159,10 @@ class _HomePageState extends State<HomePage> {
         ),
         body: showAnimalList(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'Increment',
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
+          },
+          tooltip: 'Novo Animal',
           child: Icon(Icons.add),
         ));
   }

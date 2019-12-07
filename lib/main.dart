@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/pages/root_page.dart';
+import 'package:cow_manager/view/root_page.dart';
 
 void main() {
   runApp(new MyApp());

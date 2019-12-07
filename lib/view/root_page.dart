@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cow_manager/pages/login_signup_page.dart';
+import 'package:cow_manager/view/login_signup_page.dart';
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/pages/home_page.dart';
+import 'package:cow_manager/view/home_page.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
