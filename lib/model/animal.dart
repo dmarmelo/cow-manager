@@ -1,8 +1,8 @@
+import 'package:cow_manager/model/domain_object.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 
-class Animal {
-  String key;
+class Animal extends DomainObject {
   String electronicId;
   String earring;
   String breed;
@@ -17,7 +17,7 @@ class Animal {
   double weight;
   String userId;
 
-  static var formatter = DateFormat('yyyy-MM-dd');
+  static var dateFormatter = DateFormat('yyyy-MM-dd');
 
   Animal(
       this.electronicId,
@@ -36,11 +36,10 @@ class Animal {
       );
 
   Animal.fromSnapshot(DataSnapshot snapshot) :
-        key = snapshot.key,
         electronicId = snapshot.value["id eletrónica"],
         earring = snapshot.value["brinco"],
         breed = snapshot.value["raça"],
-        birth = formatter.parse(snapshot.value["data nascimento"]),
+        birth = dateFormatter.parse(snapshot.value["data nascimento"]),
         gender = snapshot.value["sexo"],
         profile = snapshot.value["perfil"],
         effective = snapshot.value["efetivo"],
@@ -49,14 +48,16 @@ class Animal {
         reproductionCycles = snapshot.value["ciclos reprodução"] == "" ? 0 : snapshot.value["ciclos reprodução"],
         pathology = snapshot.value["patologia"],
         weight = snapshot.value["peso atual"] is int ? (snapshot.value["peso atual"] as int).toDouble(): snapshot.value["peso atual"],
-        userId = snapshot.value["userId"];
+        userId = snapshot.value["userId"],
+        super.fromSnapshot(snapshot);
 
+  @override
   toJson() {
     return {
       "id eletrónica": electronicId,
       "brinco": earring,
       "raça": breed,
-      "data nascimento": formatter.format(birth),
+      "data nascimento": dateFormatter.format(birth),
       "sexo": gender,
       "perfil": profile,
       "efetivo": effective,
