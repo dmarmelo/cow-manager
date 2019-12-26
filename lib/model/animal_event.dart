@@ -1,4 +1,4 @@
-import 'package:cow_manager/model/domain_object.dart';
+import 'package:cow_manager/model/abstract_document.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 
