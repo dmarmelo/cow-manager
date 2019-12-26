@@ -10,6 +10,7 @@ class Birth extends AnimalEvent {
   @override
   toJson() {
     // TODO: implement toJson
+
     return null;
   }
 
