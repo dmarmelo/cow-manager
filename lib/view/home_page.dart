@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           );
         });
   }
-
+/*
   Widget showAnimalList() {
     if (_animalList.length > 0) {
       return ListView.builder(
@@ -145,6 +145,28 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+ */
+  Widget inserirAnimal(){
+    return new FlatButton(
+          child: new Text('Inserir',
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
+            onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
+          }
+          );
+  }
+
+  Widget buscarAnimal(){
+    return new FlatButton(
+        child: new Text('Buscar animal',
+            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
+        }
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -157,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: signOut)
           ],
         ),
-        body: showAnimalList(),
+        body: _showMenu(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
@@ -165,5 +187,18 @@ class _HomePageState extends State<HomePage> {
           tooltip: 'Novo Animal',
           child: Icon(Icons.add),
         ));
+  }
+
+  Widget _showMenu() {
+    return new Container(
+        padding: EdgeInsets.all(16.0),
+          child: new ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              inserirAnimal(),
+              buscarAnimal(),
+            ],
+          ),
+        );
   }
 }
