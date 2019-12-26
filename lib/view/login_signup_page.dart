@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:cow_manager/services/authentication.dart';
 
@@ -89,7 +91,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Cow Manager'),
+          title: new Text('Cow Manager'.toUpperCase()),
+          centerTitle: true,
         ),
         body: Stack(
           children: <Widget>[
@@ -176,7 +179,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             hintText: 'Email',
             icon: new Icon(
               Icons.mail,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value.trim(),
@@ -195,7 +198,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             hintText: 'Password',
             icon: new Icon(
               Icons.lock,
-              color: Colors.grey,
+              color: Colors.black,
             )),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value.trim(),
@@ -205,7 +208,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: new RaisedButton(
