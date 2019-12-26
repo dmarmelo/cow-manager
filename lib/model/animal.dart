@@ -2,7 +2,7 @@ import 'package:cow_manager/model/domain_object.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 
-class Animal extends DomainObject {
+class Animal extends AbstractDocument {
   String electronicId;
   String earring;
   String breed;

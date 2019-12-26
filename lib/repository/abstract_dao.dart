@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:cow_manager/model/domain_object.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-abstract class AbstractDao<CLAZZ extends DomainObject> {
+abstract class AbstractDao<CLAZZ extends AbstractDocument> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
   final String path;
   DatabaseReference ref;
@@ -24,6 +26,18 @@ abstract class AbstractDao<CLAZZ extends DomainObject> {
 
   Future<void> delete(CLAZZ obj) {
     return ref.child(obj.key).remove();
+  }
+
+  StreamSubscription<Event> onAddListener(onData(Event event)) {
+    return ref.onChildAdded.listen(onData);
+  }
+
+  StreamSubscription<Event> onChangeListener(onData(Event event)) {
+    return ref.onChildChanged.listen(onData);
+  }
+
+  StreamSubscription<Event> onRemovedListener(onData(Event event)) {
+    return ref.onChildRemoved.listen(onData);
   }
 
 }

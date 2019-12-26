@@ -1,14 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class DomainObject {
+abstract class AbstractDocument {
   String _key;
   String get key => _key;
 
-  DomainObject();
+  AbstractDocument();
 
   @mustCallSuper
-  DomainObject.fromSnapshot(DataSnapshot snapshot) :
+  AbstractDocument.fromSnapshot(DataSnapshot snapshot) :
         _key = snapshot.key;
 
   Map<String, dynamic> toJson();
