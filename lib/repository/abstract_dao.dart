@@ -28,6 +28,10 @@ abstract class AbstractDao<CLAZZ extends AbstractDocument> {
     return ref.child(obj.key).remove();
   }
 
+  Future<DataSnapshot> where(String key, dynamic value) {
+    return ref.orderByChild(key).equalTo(value).once();
+  }
+
   StreamSubscription<Event> onAddListener(onData(Event event)) {
     return ref.onChildAdded.listen(onData);
   }
