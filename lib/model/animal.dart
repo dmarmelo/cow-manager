@@ -35,21 +35,25 @@ class Animal extends AbstractDocument {
       this.userId
       );
 
-  Animal.fromSnapshot(DataSnapshot snapshot) :
-        electronicId = snapshot.value["id eletrónica"],
-        earring = snapshot.value["brinco"],
-        breed = snapshot.value["raça"],
-        birth = dateFormatter.parse(snapshot.value["data nascimento"]),
-        gender = snapshot.value["sexo"],
-        profile = snapshot.value["perfil"],
-        effective = snapshot.value["efetivo"],
-        lot = snapshot.value["lote"],
-        park = snapshot.value["parque"],
-        reproductionCycles = snapshot.value["ciclos reprodução"] == "" ? 0 : snapshot.value["ciclos reprodução"],
-        pathology = snapshot.value["patologia"],
-        weight = snapshot.value["peso atual"] is int ? (snapshot.value["peso atual"] as int).toDouble(): snapshot.value["peso atual"],
-        userId = snapshot.value["userId"],
-        super.fromSnapshot(snapshot);
+  Animal.fromMap(String key, Map<String, dynamic> values) :
+        electronicId = values["id eletrónica"],
+        earring = values["brinco"],
+        breed = values["raça"],
+        birth = dateFormatter.parse(values["data nascimento"]),
+        gender = values["sexo"],
+        profile = values["perfil"],
+        effective = values["efetivo"],
+        lot = values["lote"],
+        park = values["parque"],
+        reproductionCycles = values["ciclos reprodução"] == "" ? 0 : values["ciclos reprodução"],
+        pathology = values["patologia"],
+        weight = values["peso atual"] is int ? (values["peso atual"] as int).toDouble(): values["peso atual"],
+        userId = values["userId"],
+        super.fromMap(key);
+
+  Animal.fromSnapshot(DataSnapshot snapshot) {
+      Animal.fromMap(snapshot.key, snapshot.value);
+  }
 
   @override
   toJson() {
@@ -69,4 +73,5 @@ class Animal extends AbstractDocument {
       "userId": userId,
     };
   }
+
 }
