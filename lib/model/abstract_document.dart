@@ -12,4 +12,13 @@ abstract class AbstractDocument {
         _key = snapshot.key;
 
   Map<String, dynamic> toJson();
+
+  Map<String, dynamic> toJsonWKey() {
+    Map<String, dynamic> json = {
+      "key": key
+    };
+    json.addAll(toJson());
+    return json;
+  }
+
 }
