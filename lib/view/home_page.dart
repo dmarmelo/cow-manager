@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> {
           tiles: [
             ListTile(
               title: Text('Inserir'),
-              trailing: Icon(Icons.arrow_forward),
+              trailing: Icon(Icons.add),
               onTap: () {
                 Navigator.push(
                     context,
@@ -197,7 +197,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               title: Text('Buscar animal'),
-              trailing: Icon(Icons.arrow_forward),
+              trailing: Icon(Icons.assignment),
                 onTap: () {
                   Navigator.push(
                       context,
