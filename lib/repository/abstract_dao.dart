@@ -12,8 +12,10 @@ abstract class AbstractDao<CLAZZ extends AbstractDocument> {
     ref = _database.reference().child(path);
   }
 
-  Future<void> create(CLAZZ obj) {
-    return ref.push().set(obj.toJson());
+  Future<String> create(CLAZZ obj) {
+    var newKey = ref.push().key;
+    var future = ref.child(newKey).set(obj.toJson());
+    return future.then((onValue) => newKey);
   }
 
   Future<DataSnapshot> read(String key) {
