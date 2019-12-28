@@ -187,12 +187,24 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Inserir'),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () => inserirAnimal(),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => NewAnimalPage(),
+                ));
+              }
             ),
             ListTile(
               title: Text('Buscar animal'),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () => buscarAnimal(),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => NewAnimalPage(),
+                      ));
+                }
             ),
           ]
       ).toList(),
