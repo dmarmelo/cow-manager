@@ -148,8 +148,6 @@ class _HomePageState extends State<HomePage> {
  */
   Widget inserirAnimal(){
     return new FlatButton(
-          child: new Text('Inserir',
-            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
             onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
           }
@@ -158,8 +156,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget buscarAnimal(){
     return new FlatButton(
-        child: new Text('Buscar animal',
-            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
         }
@@ -180,25 +176,26 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: _showMenu(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (ctx) => NewAnimalPage()));
-          },
-          tooltip: 'Novo Animal',
-          child: Icon(Icons.add),
-        ));
+        );
   }
 
   Widget _showMenu() {
-    return new Container(
-        padding: EdgeInsets.all(16.0),
-          child: new ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              inserirAnimal(),
-              buscarAnimal(),
-            ],
-          ),
-        );
+    return new ListView(
+      children: ListTile.divideTiles(
+          context: context,
+          tiles: [
+            ListTile(
+              title: Text('Inserir'),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () => inserirAnimal(),
+            ),
+            ListTile(
+              title: Text('Buscar animal'),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () => buscarAnimal(),
+            ),
+          ]
+      ).toList(),
+    );
   }
 }
