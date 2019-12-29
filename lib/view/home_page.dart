@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                  builder: (context) => NewAnimalPage(),
+                  builder: (context) => NewAnimalPage(userId: widget.userId),
                   )
                 );
               }
