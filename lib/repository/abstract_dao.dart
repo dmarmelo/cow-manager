@@ -52,10 +52,15 @@ abstract class AbstractDao<CLAZZ extends AbstractDocument> {
     var future = ref.orderByChild(key).equalTo(value).once();
     return future.then((result) {
       var list = List<CLAZZ>();
-      result.value.forEach((key, value) {
-        var valueMap = Map<String, dynamic>.from(value);
-        list.add(mapToClass(key, valueMap));
-      });
+
+      var values = result.value;
+      if (values != null) {
+        values.forEach((key, value) {
+          var valueMap = Map<String, dynamic>.from(value);
+          list.add(mapToClass(key, valueMap));
+        });
+      }
+
       return list;
     });
   }
