@@ -1,6 +1,7 @@
 import 'package:cow_manager/chip_field/ChipFormField.dart';
 import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/repository/animal_dao.dart';
+import 'package:cow_manager/view/animal_profile.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -78,7 +79,9 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
             widget.userId
         );
 
-        var animalWKey = AnimalDao().create(newAnimal);
+        AnimalDao().create(newAnimal).then((animal) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AnimalProfilePage(animal: animal)));
+        });
 
         Navigator.pop(context);
 
@@ -114,7 +117,6 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
         child: new Form(
           key: _formKey,
           child: new ListView(
-            shrinkWrap: true,
             children: <Widget>[
               _chipFormField,
               new TextFormField( // Earring
