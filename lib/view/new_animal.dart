@@ -105,7 +105,7 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('New Animal'),
+        title: new Text('New Animal', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: _showForm(),
     );
@@ -266,7 +266,7 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
 
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(0.0, 25.0, 0.0, 0.0),
+        padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
         child: SizedBox(
           height: 40.0,
           child: new RaisedButton(

@@ -30,7 +30,7 @@ class _SearchAnimalPageState extends State<SearchAnimalPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Search Animal'),
+          title: new Text('Search Animal',style: TextStyle(fontWeight: FontWeight.bold)),
         ),
         body: _showChipSearch()
     );

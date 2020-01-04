@@ -91,7 +91,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
-          title: new Text('Cow Manager'.toUpperCase()),
+          title: new Text('Cow Manager', style: TextStyle(fontWeight: FontWeight.bold)),
           centerTitle: true,
         ),
         body: Stack(
