@@ -8,8 +8,10 @@ class Weighting extends AnimalEvent {
 
   @override
   toJson() {
-    // TODO: implement toJson
-    return null;
+    return {
+      "peso atual": weight,
+    };
   }
-
 }
+
+

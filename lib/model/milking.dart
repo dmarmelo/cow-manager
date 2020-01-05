@@ -8,8 +8,9 @@ class Milking extends AnimalEvent {
 
   @override
   toJson() {
-    // TODO: implement toJson
-    return null;
+    return {
+      "amount": amount,
+    };
   }
 
 }
