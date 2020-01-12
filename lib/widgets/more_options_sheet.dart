@@ -27,7 +27,7 @@ class _MoreOptionsSheetState extends State<MoreOptionsSheet> {
         children: <Widget>[
           new ListTile(
               leading: new Icon(FontAwesomeIcons.weight),
-              title: new Text('Weithing'),
+              title: new Text('Weighting'),
               onTap: () {
                 Navigator.of(context).pop();
                 widget.callBackOptionTapped(moreOptions.weighting);
