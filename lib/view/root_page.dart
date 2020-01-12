@@ -3,6 +3,7 @@ import 'package:cow_manager/view/login_signup_page.dart';
 import 'package:cow_manager/services/authentication.dart';
 import 'package:cow_manager/view/home_page.dart';
 
+
 enum AuthStatus {
   NOT_DETERMINED,
   NOT_LOGGED_IN,

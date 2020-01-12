@@ -1,10 +1,8 @@
-import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/view/animal_profile.dart';
 import 'package:cow_manager/view/new_animal.dart';
 import 'package:cow_manager/view/search_animal.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -68,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                   ));
             }),
         // TODO REMOVE ONLY FOR TESTS
-        ListTile(
+       /* ListTile(
             title: Text('Animal Profile'),
             trailing: Icon(Icons.search),
             onTap: () {
@@ -92,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (context) => AnimalProfilePage(animal: newAnimal),
                   ));
-            }),
+            }),*/
       ]).toList(),
     );
   }

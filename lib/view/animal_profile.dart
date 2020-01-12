@@ -13,13 +13,33 @@ class AnimalProfilePage extends StatefulWidget {
 
 class _AnimalProfilePageState extends State<AnimalProfilePage> {
 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Animal Profile'),
       ),
-      body: _showProfile(),
+      body: Center(
+        child: this._showProfile(),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.insert_invitation),
+            title: Text('Birth'),
+
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            title: Text('Business'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            title: Text('School'),
+          ),
+        ],
+      ),
     );
   }
 
@@ -29,12 +49,12 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
           context: context,
           tiles: [
             ListTile(
-                title: Text("Eletronic Id"),
-                trailing: Text(widget.animal.electronicId),
+              title: Text("Eletronic Id"),
+              trailing: Text(widget.animal.electronicId),
             ),
             ListTile(
-                title: Text('Earring'),
-                trailing: Text(widget.animal.earring),
+              title: Text('Earring'),
+              trailing: Text(widget.animal.earring),
             ),
             ListTile(
               title: Text('Birth'),
@@ -76,5 +96,4 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
       ).toList(),
     );
   }
-
 }
