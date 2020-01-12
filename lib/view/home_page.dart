@@ -1,7 +1,9 @@
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/view/new_animal.dart';
-import 'package:cow_manager/view/search_animal.dart';
 import 'package:flutter/material.dart';
+import 'package:cow_manager/chip_field/ChipFormField.dart';
+import 'package:cow_manager/repository/animal_dao.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'animal_profile.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -17,6 +19,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  ChipFormField _chipFormField;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // create a new ChipFormField widget to get an animal identifier
+    // use _chipFormField.chip to get the animal identifier whenever needed
+    //
+    _chipFormField = ChipFormField(context, 'HC-06', (chip) {
+      print('CHIP: ' + chip);
+    });
+  }
+
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -30,7 +47,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Cow Manager',style: TextStyle(fontWeight: FontWeight.bold)),
+        title: new Text('Search Animal',style: TextStyle(fontWeight: FontWeight.bold)),
         actions: <Widget>[
           new FlatButton(
               child: new Text('Logout',
@@ -38,60 +55,50 @@ class _HomePageState extends State<HomePage> {
               onPressed: signOut)
         ],
       ),
-      body: _showMenu(),
+      body: _showChipSearch(),
     );
   }
 
-  Widget _showMenu() {
-    return new ListView(
-      children: ListTile.divideTiles(context: context, tiles: [
-        ListTile(
-            title: Text('New Animal'),
-            trailing: Icon(Icons.add),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewAnimalPage(userId: widget.userId),
-                  ));
-            }),
-        ListTile(
-            title: Text('Search Animal'),
-            trailing: Icon(Icons.search),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SearchAnimalPage(),
-                  ));
-            }),
-        // TODO REMOVE ONLY FOR TESTS
-       /* ListTile(
-            title: Text('Animal Profile'),
-            trailing: Icon(Icons.search),
-            onTap: () {
-              var newAnimal = new Animal(
-                  "1234567890",
-                  "EAR246851",
-                  "exbreed",
-                  DateFormat("yyyy-mm-dd").parse("2019-21-29"),
-                  "Male",
-                  "exprofile",
-                  "exefective",
-                  "exlot",
-                  "expark",
-                  2,
-                  "expathology",
-                  60,
-                  widget.userId);
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AnimalProfilePage(animal: newAnimal),
-                  ));
-            }),*/
-      ]).toList(),
+  Widget _showChipSearch() {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          _chipFormField,
+          Padding(
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+              child: SizedBox(
+                height: 40.0,
+                child: new RaisedButton(
+                  elevation: 5.0,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                  color: Colors.orange,
+                  child: new Text("Search",
+                      style: new TextStyle(
+                          fontSize: 20.0, color: Colors.white)),
+                  onPressed: () => _search(),
+                ),
+              )),
+        ],
+      ),
     );
   }
+
+  void _search() {
+    var chip = _chipFormField.chip;
+
+    AnimalDao().where("id eletrónica", chip).then((results) {
+      if (results.length > 0) {
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => AnimalProfilePage(animal: results[0])));
+      }
+      else {
+        Fluttertoast.showToast(
+            msg: "Animal Not Found",
+            gravity: ToastGravity.CENTER
+        );
+      }
+    });
+  }
+
 }
