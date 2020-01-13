@@ -110,7 +110,6 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         context: context,
         builder: (BuildContext ctx) {
           return MoreOptionsSheet(
-            callBackColorTapped: null,
             callBackOptionTapped: null,
           );
         });

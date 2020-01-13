@@ -4,14 +4,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 enum moreOptions { weighting, milking }
 
 class MoreOptionsSheet extends StatefulWidget {
-  final void Function(Color) callBackColorTapped;
-
   final void Function(moreOptions) callBackOptionTapped;
 
   const MoreOptionsSheet(
       {Key key,
-        this.callBackColorTapped,
-        this.callBackOptionTapped})
+      this.callBackOptionTapped})
       : super(key: key);
 
   @override
@@ -19,7 +16,6 @@ class MoreOptionsSheet extends StatefulWidget {
 }
 
 class _MoreOptionsSheetState extends State<MoreOptionsSheet> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,9 +35,14 @@ class _MoreOptionsSheetState extends State<MoreOptionsSheet> {
                 Navigator.of(context).pop();
                 widget.callBackOptionTapped(moreOptions.milking);
               }),
+          new Divider(),
+          new ListTile(
+            title: Center(
+              child: Text("Cancel"),
+            ),
+          )
         ],
       ),
     );
   }
-
 }
