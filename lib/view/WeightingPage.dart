@@ -13,8 +13,9 @@ class _WeightingPageState extends State<WeightingPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('WeightingPage'),
+        title: new Text('Weighting'),
       ),
+      body: Text('WeightingPage'),
     );
   }
 }

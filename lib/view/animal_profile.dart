@@ -1,5 +1,7 @@
 import 'package:cow_manager/model/animal.dart';
-import 'package:cow_manager/widgets/more_options_sheet.dart';
+import 'package:cow_manager/view/WeightingPage.dart';
+import 'package:cow_manager/view/milking_page.dart';
+import 'package:cow_manager/widgets/profile_more_options_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -33,23 +35,7 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         ],
       ),
       body: Center(
-        child: this._showProfile(),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.insert_invitation),
-            title: Text('Birth'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            title: Text('Business'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text('School'),
-          ),
-        ],
+        child: _showProfile(),
       ),
     );
   }
@@ -109,9 +95,28 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext ctx) {
-          return MoreOptionsSheet(
-            callBackOptionTapped: null,
+          return ProfileMoreOptionsSheet(
+            callBackOptionTapped: moreOptionsSheetCallback,
           );
         });
+  }
+
+  void moreOptionsSheetCallback(ProfileMoreOptions option) {
+    switch (option) {
+      case ProfileMoreOptions.WEIGHTING: {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => WeightingPage()));
+        break;
+      }
+      case ProfileMoreOptions.MILKING: {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MilkingPage()));
+        break;
+      }
+    }
   }
 }

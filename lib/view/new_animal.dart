@@ -28,11 +28,14 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
   final TextEditingController _birthController = new TextEditingController();
   String _gender = "Macho";
   final TextEditingController _profileController = new TextEditingController();
-  final TextEditingController _effectiveController = new TextEditingController();
+  final TextEditingController _effectiveController =
+      new TextEditingController();
   final TextEditingController _lotController = new TextEditingController();
   final TextEditingController _parkController = new TextEditingController();
-  final TextEditingController _reproductionCyclesController = new TextEditingController();
-  final TextEditingController _pathologyController = new TextEditingController();
+  final TextEditingController _reproductionCyclesController =
+      new TextEditingController();
+  final TextEditingController _pathologyController =
+      new TextEditingController();
   final TextEditingController _weightController = new TextEditingController();
 
   String _errorMessage;
@@ -76,15 +79,16 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
             int.parse(_reproductionCyclesController.text.trim()),
             _pathologyController.text.trim(),
             double.parse(_weightController.text.trim()),
-            widget.userId
-        );
+            widget.userId);
 
         AnimalDao().create(newAnimal).then((animal) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AnimalProfilePage(animal: animal)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AnimalProfilePage(animal: animal)));
         });
 
         Navigator.pop(context);
-
       } catch (e) {
         print('Error: $e');
         setState(() {
@@ -93,7 +97,6 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
         });
       }
     }
-
   }
 
   void resetForm() {
@@ -103,12 +106,13 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    /*return new Scaffold(
       appBar: new AppBar(
         title: new Text('New Animal', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       body: _showForm(),
-    );
+    );*/
+    return _showForm();
   }
 
   Widget _showForm() {
@@ -119,7 +123,8 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
           child: new ListView(
             children: <Widget>[
               _chipFormField,
-              new TextFormField( // Earring
+              new TextFormField(
+                // Earring
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -127,10 +132,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Earring',
                   hintText: 'Enter animal Earring...',
                 ),
-                validator: (value) => value.isEmpty ? 'Earring can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Earring can\'t be empty' : null,
                 controller: _earringController,
               ),
-              new TextFormField( // Breed
+              new TextFormField(
+                // Breed
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -138,7 +145,8 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Breed',
                   hintText: 'Enter animal Breed...',
                 ),
-                validator: (value) => value.isEmpty ? 'Breed can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Breed can\'t be empty' : null,
                 controller: _breedController,
               ),
               new DateTimeField(
@@ -152,15 +160,16 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                       context: context,
                       firstDate: DateTime(1900),
                       initialDate: currentValue ?? DateTime.now(),
-                      lastDate: DateTime(2100)
-                  );
+                      lastDate: DateTime(2100));
                 },
-                validator: (value) => value == null ? 'Birth Date can\'t be empty' : null,
+                validator: (value) =>
+                    value == null ? 'Birth Date can\'t be empty' : null,
                 controller: _birthController,
               ),
               new Padding(padding: new EdgeInsets.all(8.0)),
               new Text("Select animal Gender:"),
-              new Row( // Breed
+              new Row(
+                // Breed
                 children: <Widget>[
                   new Radio(
                     value: 'Macho',
@@ -180,7 +189,8 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   new Text('Female'),
                 ],
               ),
-              new TextFormField( // Profile
+              new TextFormField(
+                // Profile
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -188,10 +198,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Profile',
                   hintText: 'Enter animal Profile...',
                 ),
-                validator: (value) => value.isEmpty ? 'Profile can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Profile can\'t be empty' : null,
                 controller: _profileController,
               ),
-              new TextFormField( // Effective
+              new TextFormField(
+                // Effective
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -199,10 +211,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Effective',
                   hintText: 'Enter animal Effective...',
                 ),
-                validator: (value) => value.isEmpty ? 'Effective can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Effective can\'t be empty' : null,
                 controller: _effectiveController,
               ),
-              new TextFormField( // Lot
+              new TextFormField(
+                // Lot
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -210,10 +224,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Lot',
                   hintText: 'Enter animal Lot...',
                 ),
-                validator: (value) => value.isEmpty ? 'Lot can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Lot can\'t be empty' : null,
                 controller: _lotController,
               ),
-              new TextFormField( // Park
+              new TextFormField(
+                // Park
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -221,10 +237,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Park',
                   hintText: 'Enter animal Park...',
                 ),
-                validator: (value) => value.isEmpty ? 'Park can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Park can\'t be empty' : null,
                 controller: _parkController,
               ),
-              new TextFormField( // ReproductionCycles
+              new TextFormField(
+                // ReproductionCycles
                 maxLines: 1,
                 keyboardType: TextInputType.numberWithOptions(),
                 autofocus: false,
@@ -232,10 +250,13 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Reproduction Cycles',
                   hintText: 'Enter animal Reproduction Cycles...',
                 ),
-                validator: (value) => value.isEmpty ? 'Reproduction Cycles can\'t be empty' : null,
+                validator: (value) => value.isEmpty
+                    ? 'Reproduction Cycles can\'t be empty'
+                    : null,
                 controller: _reproductionCyclesController,
               ),
-              new TextFormField( // Pathology
+              new TextFormField(
+                // Pathology
                 maxLines: 1,
                 keyboardType: TextInputType.text,
                 autofocus: false,
@@ -243,10 +264,12 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Pathology',
                   hintText: 'Enter animal Pathology...',
                 ),
-                validator: (value) => value.isEmpty ? 'Pathology can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Pathology can\'t be empty' : null,
                 controller: _pathologyController,
               ),
-              new TextFormField( // Weight
+              new TextFormField(
+                // Weight
                 maxLines: 1,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 autofocus: false,
@@ -254,7 +277,8 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
                   labelText: 'Animal Weight',
                   hintText: 'Enter animal Weight...',
                 ),
-                validator: (value) => value.isEmpty ? 'Weight can\'t be empty' : null,
+                validator: (value) =>
+                    value.isEmpty ? 'Weight can\'t be empty' : null,
                 controller: _weightController,
               ),
               showPrimaryButton(),

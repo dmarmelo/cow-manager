@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-enum moreOptions { weighting, milking }
+enum ProfileMoreOptions { WEIGHTING, MILKING }
 
-class MoreOptionsSheet extends StatefulWidget {
-  final void Function(moreOptions) callBackOptionTapped;
+class ProfileMoreOptionsSheet extends StatefulWidget {
+  final void Function(ProfileMoreOptions) callBackOptionTapped;
 
-  const MoreOptionsSheet(
+  const ProfileMoreOptionsSheet(
       {Key key,
       this.callBackOptionTapped})
       : super(key: key);
 
   @override
-  _MoreOptionsSheetState createState() => _MoreOptionsSheetState();
+  _ProfileMoreOptionsSheetState createState() => _ProfileMoreOptionsSheetState();
 }
 
-class _MoreOptionsSheetState extends State<MoreOptionsSheet> {
+class _ProfileMoreOptionsSheetState extends State<ProfileMoreOptionsSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,14 +26,14 @@ class _MoreOptionsSheetState extends State<MoreOptionsSheet> {
               title: new Text('Weighting'),
               onTap: () {
                 Navigator.of(context).pop();
-                widget.callBackOptionTapped(moreOptions.weighting);
+                widget.callBackOptionTapped(ProfileMoreOptions.WEIGHTING);
               }),
           new ListTile(
               leading: new Icon(FontAwesomeIcons.fillDrip),
               title: new Text('Milking'),
               onTap: () {
                 Navigator.of(context).pop();
-                widget.callBackOptionTapped(moreOptions.milking);
+                widget.callBackOptionTapped(ProfileMoreOptions.MILKING);
               }),
           new Divider(),
           new ListTile(

@@ -13,8 +13,9 @@ class _MilkingPageState extends State<MilkingPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('MilkingPage'),
+        title: new Text('Milking'),
       ),
+      body: Text('Milking Page'),
     );
   }
 

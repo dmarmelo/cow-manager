@@ -3,8 +3,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'BluetoothHelper.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
+
+import 'BluetoothHelper.dart';
 
 ///
 class ChipFormField extends FormField<int> {
@@ -25,7 +26,7 @@ class ChipFormField extends FormField<int> {
                       margin: const EdgeInsets.only(left:16.0),
                       child: TextFormField(
                           controller: _textEditingController,
-                          autofocus: true,
+                          //autofocus: true,
                           decoration: InputDecoration(
                             labelText: 'Animal Eletronic Identifier',
                             hintText: 'Enter or read animal chip...',
