@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class NewAnimalPage extends StatefulWidget {
-  NewAnimalPage({Key key, this.userId}) : super(key: key);
+class NewAnimal extends StatefulWidget {
+  NewAnimal({Key key, this.userId}) : super(key: key);
 
   final String userId;
 
   @override
-  State<StatefulWidget> createState() => new _NewAnimalPageState();
+  State<StatefulWidget> createState() => new _NewAnimalState();
 }
 
-class _NewAnimalPageState extends State<NewAnimalPage> {
+class _NewAnimalState extends State<NewAnimal> {
   final _formKey = new GlobalKey<FormState>();
 
   var dateFormat = DateFormat('yyyy-MM-dd');
@@ -24,7 +24,6 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
 
   final TextEditingController _earringController = new TextEditingController();
   final TextEditingController _breedController = new TextEditingController();
-  DateTime _birth;
   final TextEditingController _birthController = new TextEditingController();
   String _gender = "Macho";
   final TextEditingController _profileController = new TextEditingController();
@@ -45,7 +44,7 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
     _errorMessage = "";
     super.initState();
 
-    _chipFormField = ChipFormField(context, 'HC-06', (chip) {
+    _chipFormField = ChipFormField(context, 'HC-06', TextEditingController(), (chip) {
       print('CHIP: ' + chip);
     });
   }
@@ -99,6 +98,7 @@ class _NewAnimalPageState extends State<NewAnimalPage> {
     }
   }
 
+  // TODO Por botão para fazer reset ao form??
   void resetForm() {
     _formKey.currentState.reset();
     _errorMessage = "";

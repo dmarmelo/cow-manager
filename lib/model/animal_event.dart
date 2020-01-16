@@ -1,5 +1,6 @@
 import 'package:cow_manager/model/abstract_document.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 abstract class AnimalEvent extends AbstractDocument {
@@ -19,6 +20,7 @@ abstract class AnimalEvent extends AbstractDocument {
   AnimalEvent.fromSnapshot(DataSnapshot snapshot);
 
   @override
+  @mustCallSuper
   Map<String, dynamic> toJson() {
     return {
       "animalKey": animalKey,

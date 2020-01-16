@@ -11,6 +11,10 @@ class _WeightingPageState extends State<WeightingPage> {
 
   @override
   Widget build(BuildContext context) {
+    /* TODO
+        Campo para inserir as pesagens (NumberField - Button)
+        Listas das pesagens, por ordem cronológicamente inversa (ListView)
+     */
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Weighting'),

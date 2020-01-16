@@ -3,14 +3,14 @@ import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'animal_profile.dart';
+import '../view/animal_profile.dart';
 
-class SearchAnimalPage extends StatefulWidget {
+class SearchAnimal extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _SearchAnimalPageState();
+  State<StatefulWidget> createState() => new _SearchAnimalState();
 }
 
-class _SearchAnimalPageState extends State<SearchAnimalPage> {
+class _SearchAnimalState extends State<SearchAnimal> {
   ChipFormField _chipFormField;
 
   @override
@@ -20,7 +20,7 @@ class _SearchAnimalPageState extends State<SearchAnimalPage> {
     // create a new ChipFormField widget to get an animal identifier
     // use _chipFormField.chip to get the animal identifier whenever needed
     //
-    _chipFormField = ChipFormField(context, 'HC-06', (chip) {
+    _chipFormField = ChipFormField(context, 'HC-06', TextEditingController(), (chip) {
       print('CHIP: ' + chip);
     });
   }

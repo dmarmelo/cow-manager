@@ -1,6 +1,7 @@
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/view/new_animal.dart';
-import 'package:cow_manager/view/search_animal.dart';
+import 'package:cow_manager/widgets/birth.dart';
+import 'package:cow_manager/widgets/new_animal.dart';
+import 'package:cow_manager/widgets/search_animal.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -28,11 +29,9 @@ class _HomePageState extends State<HomePage> {
 
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    SearchAnimalPage(),
-    NewAnimalPage(),
-    Text(
-      'BirthPage',
-    ),
+    SearchAnimal(),
+    NewAnimal(),
+    Birth(),
   ];
 
   void _onItemTapped(int index) {
@@ -54,7 +53,10 @@ class _HomePageState extends State<HomePage> {
               onPressed: signOut)
         ],
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -87,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewAnimalPage(userId: widget.userId),
+                    builder: (context) => NewAnimal(userId: widget.userId),
                   ));
             }),
         ListTile(
@@ -97,7 +99,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SearchAnimalPage(),
+                    builder: (context) => SearchAnimal(),
                   ));
             }),
       ]).toList(),

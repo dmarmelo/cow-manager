@@ -11,6 +11,10 @@ class _MilkingPageState extends State<MilkingPage> {
 
   @override
   Widget build(BuildContext context) {
+    /* TODO
+        Campo para inserir as aleitações (NumberField - Button)
+        Listas das aleitações, por ordem cronológicamente inversa (ListView)
+     */
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Milking'),

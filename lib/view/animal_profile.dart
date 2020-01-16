@@ -1,6 +1,6 @@
 import 'package:cow_manager/model/animal.dart';
-import 'package:cow_manager/view/WeightingPage.dart';
 import 'package:cow_manager/view/milking_page.dart';
+import 'package:cow_manager/view/weighting_page.dart';
 import 'package:cow_manager/widgets/profile_more_options_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -83,9 +83,15 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
           title: Text('Pathology'),
           trailing: Text(widget.animal.pathology),
         ),
+        // TODO Mostrar o resultado da ultima pesagem
         ListTile(
           title: Text('Weight'),
           trailing: Text(widget.animal.weight.toString() + "Kg"),
+        ),
+        // TODO Mostrar o resultado da ultima aleitação
+        ListTile(
+          title: Text('Milking'),
+          trailing: Text(widget.animal.weight.toString() + "ml"),
         ),
       ]).toList(),
     );
