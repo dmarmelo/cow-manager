@@ -9,7 +9,6 @@ abstract class AnimalEvent extends AbstractDocument {
 
   static var dateTimeFormatter = DateFormat('yyyy-MM-dd HH:mm:ss');
 
-
   AnimalEvent(this.animalKey, this.dateTime);
 
   AnimalEvent.fromMap(String key, Map<String, dynamic> values) :

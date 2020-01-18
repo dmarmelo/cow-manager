@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     SearchAnimal(),
     NewAnimal(),
-    Birth(),
+    Birth(), // TODO Mover a página de nascimento para a lista de eventos no perfil??
   ];
 
   void _onItemTapped(int index) {
