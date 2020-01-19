@@ -113,7 +113,7 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => WeightingPage()));
+                builder: (context) => WeightingPage(animal: widget.animal)));
         break;
       }
       case ProfileMoreOptions.MILKING: {
