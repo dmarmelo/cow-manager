@@ -120,7 +120,7 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => MilkingPage()));
+                builder: (context) => MilkingPage(animal: widget.animal)));
         break;
       }
     }
