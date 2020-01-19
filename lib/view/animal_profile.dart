@@ -87,12 +87,12 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         // TODO Mostrar o resultado da ultima pesagem
         ListTile(
           title: Text('Weight'),
-          trailing: Text(widget.animal.weight.toString() + "Kg"),
+          trailing: Text(widget.animal.lastWeight.toString() + "Kg"),
         ),
         // TODO Mostrar o resultado da ultima aleitação
         ListTile(
           title: Text('Milking'),
-          trailing: Text(widget.animal.amount.toString() + "ml"),
+          trailing: Text(widget.animal.lastMilking.toString() + "ml"),
         ),
       ]).toList(),
     );

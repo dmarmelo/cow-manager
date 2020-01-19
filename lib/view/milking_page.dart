@@ -57,7 +57,7 @@ class _MilkingPageState extends State<MilkingPage> {
               new TextFormField(
                 // Milking
                 maxLines: 1,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 autofocus: false,
                 decoration: new InputDecoration(
                   labelText: 'Milking',
@@ -96,7 +96,7 @@ class _MilkingPageState extends State<MilkingPage> {
       _errorMessage = "";
     });
       try {
-        this.widget.animal.amount =  double.parse(_milkingController.text.trim());
+        this.widget.animal.lastMilking =  double.parse(_milkingController.text.trim());
 
         var newMilking = new Milking(
              widget.animal.electronicId,

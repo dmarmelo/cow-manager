@@ -55,7 +55,7 @@ class _WeightingPageState extends State<WeightingPage> {
                   new TextFormField(
                     // Weighting
                     maxLines: 1,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     autofocus: false,
                     decoration: new InputDecoration(
                       labelText: 'Weighting',
@@ -94,7 +94,7 @@ class _WeightingPageState extends State<WeightingPage> {
       _errorMessage = "";
     });
     try {
-      this.widget.animal.weight =  double.parse(_weightingController.text.trim());
+      this.widget.animal.lastWeight =  double.parse(_weightingController.text.trim());
       var newWeighting = new Weighting(
           widget.animal.electronicId,
           dateFormat.parse(new DateTime.now().toString()),
