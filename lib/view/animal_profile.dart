@@ -10,6 +10,7 @@ class AnimalProfilePage extends StatefulWidget {
 
   final Animal animal;
 
+
   @override
   State<StatefulWidget> createState() => new _AnimalProfilePageState();
 }
@@ -91,7 +92,7 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         // TODO Mostrar o resultado da ultima aleitação
         ListTile(
           title: Text('Milking'),
-          trailing: Text(widget.animal.weight.toString() + "ml"),
+          trailing: Text(widget.animal.amount.toString() + "ml"),
         ),
       ]).toList(),
     );

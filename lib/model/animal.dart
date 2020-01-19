@@ -15,6 +15,7 @@ class Animal extends AbstractDocument {
   int reproductionCycles;
   String pathology;
   double weight;
+  double amount;
   String userId;
 
   static var dateFormatter = DateFormat('yyyy-MM-dd');
@@ -32,6 +33,7 @@ class Animal extends AbstractDocument {
       this.reproductionCycles,
       this.pathology,
       this.weight,
+      this.amount,
       this.userId
       );
 
@@ -48,6 +50,7 @@ class Animal extends AbstractDocument {
         reproductionCycles = values["ciclos reprodução"] == "" ? 0 : values["ciclos reprodução"],
         pathology = values["patologia"],
         weight = values["peso atual"] is int ? (values["peso atual"] as int).toDouble(): values["peso atual"],
+        amount = values["quantidade"] is int ? (values["quantidade"] as int).toDouble(): values["quantidade"],
         userId = values["userId"],
         super.fromMap(key);
 
@@ -70,6 +73,7 @@ class Animal extends AbstractDocument {
       "ciclos reprodução": reproductionCycles,
       "patologia": pathology,
       "peso atual": weight,
+      "quantidade": amount,
       "userId": userId,
     };
   }

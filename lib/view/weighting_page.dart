@@ -1,5 +1,6 @@
 import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/model/weighting.dart';
+import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:cow_manager/repository/weighting_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -93,10 +94,12 @@ class _WeightingPageState extends State<WeightingPage> {
       _errorMessage = "";
     });
     try {
+      this.widget.animal.weight =  double.parse(_weightingController.text.trim());
       var newWeighting = new Weighting(
           widget.animal.electronicId,
           dateFormat.parse(new DateTime.now().toString()),
           double.parse(_weightingController.text.trim()));
+      AnimalDao().update(this.widget.animal);
       WeightingDao().create(newWeighting).then((weighting) {
         Navigator.push(
             context,

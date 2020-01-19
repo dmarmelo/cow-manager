@@ -1,5 +1,6 @@
 import 'package:cow_manager/model/animal.dart';
 import 'package:cow_manager/model/milking.dart';
+import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:cow_manager/repository/milking_dao.dart';
 import 'package:cow_manager/view/animal_profile.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class _MilkingPageState extends State<MilkingPage> {
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(30.0)),
             color: Colors.orange,
-            child: new Text('Create amount',
+            child: new Text('Save amount',
                 style: new TextStyle(fontSize: 20.0, color: Colors.white)),
             onPressed: validateAndSubmit,
           ),
@@ -95,10 +96,13 @@ class _MilkingPageState extends State<MilkingPage> {
       _errorMessage = "";
     });
       try {
+        this.widget.animal.amount =  double.parse(_milkingController.text.trim());
+
         var newMilking = new Milking(
              widget.animal.electronicId,
              dateFormat.parse(new DateTime.now().toString()),
-    double.parse(_milkingController.text.trim()));
+             double.parse(_milkingController.text.trim()));
+        AnimalDao().update(this.widget.animal);
         MilkingDao().create(newMilking).then((milking) {
           Navigator.push(
               context,

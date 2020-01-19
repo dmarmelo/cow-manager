@@ -37,6 +37,8 @@ class _NewAnimalState extends State<NewAnimal> {
       new TextEditingController();
   final TextEditingController _weightController = new TextEditingController();
 
+  final TextEditingController _amountController = new TextEditingController();
+
   String _errorMessage;
 
   @override
@@ -78,6 +80,7 @@ class _NewAnimalState extends State<NewAnimal> {
             int.parse(_reproductionCyclesController.text.trim()),
             _pathologyController.text.trim(),
             double.parse(_weightController.text.trim()),
+            double.parse(_amountController.text.trim()),
             widget.userId);
 
         AnimalDao().create(newAnimal).then((animal) {
