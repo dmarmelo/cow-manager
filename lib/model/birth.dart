@@ -1,33 +1,33 @@
-import 'package:cow_manager/model/abstract_document.dart';
+import 'package:cow_manager/model/animal_event.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class Birth extends AbstractDocument {
-  String fatherKey;
-  String motherKey;
-  int pupsNumber;
+class Birth extends AnimalEvent {
+  int maleNumber;
+  int femaleNumber;
   int stillbirths;
 
-  Birth(this.fatherKey, this.motherKey, this.pupsNumber, this.stillbirths);
+  Birth(String animalKey, DateTime dateTime, this.maleNumber, this.femaleNumber, this.stillbirths) : super(animalKey, dateTime);
 
   Birth.fromMap(String key, Map<String, dynamic> values) :
-        fatherKey = values["id pai"],
-        motherKey = values["id mae"],
-        pupsNumber = values["numero crias"],
+        maleNumber = values["numero machos"],
+        femaleNumber = values["numero femeas"],
         stillbirths = values["nados mortos"],
-        super.fromMap(key);
+        super.fromMap(key, values);
 
-  Birth.fromSnapshot(DataSnapshot snapshot) {
+  Birth.fromSnapshot(DataSnapshot snapshot) : super.fromSnapshot(snapshot) {
     Birth.fromMap(snapshot.key, snapshot.value);
   }
 
   @override
   toJson() {
-    return {
-      "id pai": fatherKey,
-      "id mae": motherKey,
-      "numero crias": pupsNumber,
+    var superJson = super.toJson();
+    Map<String, dynamic> json = {
+      "numero machos": maleNumber,
+      "numero femeas": femaleNumber,
       "nados mortos": stillbirths
     };
+    superJson.addAll(json);
+    return superJson;
   }
 
 }
