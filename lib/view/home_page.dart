@@ -78,31 +78,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  Widget _showMenu() {
-    return new ListView(
-      children: ListTile.divideTiles(context: context, tiles: [
-        ListTile(
-            title: Text('New Animal'),
-            trailing: Icon(Icons.add),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NewAnimal(userId: widget.userId),
-                  ));
-            }),
-        ListTile(
-            title: Text('Search Animal'),
-            trailing: Icon(Icons.search),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SearchAnimal(),
-                  ));
-            }),
-      ]).toList(),
-    );
-  }
 }
