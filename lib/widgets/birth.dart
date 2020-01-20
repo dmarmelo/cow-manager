@@ -29,7 +29,7 @@ class _BirthState extends State<Birth> {
   Widget build(BuildContext context) {
     /* TODO
         Formulário com campos que estão definidos na classe Birth
-        Pomos também o pai??
+        Incrementar os ciclos de reprodução do animal
      */
     return new Scaffold(
       /*appBar: new AppBar(

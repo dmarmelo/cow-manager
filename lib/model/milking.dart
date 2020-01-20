@@ -7,7 +7,7 @@ class Milking extends AnimalEvent {
   Milking(String animalKey, DateTime dateTime, this.amount) : super(animalKey, dateTime);
 
   Milking.fromMap(String key, Map<String, dynamic> values) :
-        amount = values["quantidade"],
+        amount = values["quantidade"] is int ? (values["quantidade"] as int).toDouble(): values["quantidade"],
         super.fromMap(key, values);
 
   Milking.fromSnapshot(DataSnapshot snapshot) : super.fromSnapshot(snapshot) {

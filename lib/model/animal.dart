@@ -50,7 +50,7 @@ class Animal extends AbstractDocument {
         reproductionCycles = values["ciclos reprodução"] == "" ? 0 : values["ciclos reprodução"],
         pathology = values["patologia"],
         lastWeight = values["peso atual"] is int ? (values["peso atual"] as int).toDouble(): values["peso atual"],
-        lastMilking = values["quantidade"] is int ? (values["quantidade"] as int).toDouble(): values["quantidade"],
+        lastMilking = values["última aleitação"] is int ? (values["última aleitação"] as int).toDouble(): values["última aleitação"],
         userId = values["userId"],
         super.fromMap(key);
 
@@ -73,7 +73,7 @@ class Animal extends AbstractDocument {
       "ciclos reprodução": reproductionCycles,
       "patologia": pathology,
       "peso atual": lastWeight,
-      "quantidade": lastMilking,
+      "última aleitação": lastMilking,
       "userId": userId,
     };
   }

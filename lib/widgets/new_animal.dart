@@ -52,7 +52,7 @@ class _NewAnimalState extends State<NewAnimal> {
   }
 
   // Check if form is valid before perform login or signup
-  bool validateAndSave() {
+  bool validateAndSave() { // TODO verificar se o animal já existe
     final form = _formKey.currentState;
     if (form.validate() && _chipFormField.chip.length > 0) {
       form.save();

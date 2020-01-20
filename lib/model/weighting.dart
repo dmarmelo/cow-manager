@@ -7,7 +7,7 @@ class Weighting extends AnimalEvent {
   Weighting(String animalKey, DateTime dateTime, this.weight) : super(animalKey, dateTime);
 
   Weighting.fromMap(String key, Map<String, dynamic> values) :
-        weight = values["peso"],
+        weight = values["peso"] is int ? (values["peso"] as int).toDouble(): values["peso"],
         super.fromMap(key, values);
 
   Weighting.fromSnapshot(DataSnapshot snapshot) : super.fromSnapshot(snapshot) {
