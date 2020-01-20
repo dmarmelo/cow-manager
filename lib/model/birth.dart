@@ -29,5 +29,4 @@ class Birth extends AnimalEvent {
     superJson.addAll(json);
     return superJson;
   }
-
 }

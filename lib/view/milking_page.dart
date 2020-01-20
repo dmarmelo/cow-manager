@@ -24,6 +24,7 @@ class _MilkingPageState extends State<MilkingPage> {
   final TextEditingController _milkingController = new TextEditingController();
   String _errorMessage;
 
+  List<Milking> _milkings = new List();
 
 
   @override
@@ -31,19 +32,26 @@ class _MilkingPageState extends State<MilkingPage> {
     _errorMessage = "";
     super.initState();
 
+    MilkingDao().where("animalKey", widget.animal.key).then((list) {
+      setState(() {
+        _milkings.addAll(list);
+        _milkings.sort((a, b) => a.dateTime.compareTo(b.dateTime) * -1);
+      });
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
-    /* TODO
-        Campo para inserir as aleitações (NumberField - Button)
-        Listas das aleitações, por ordem cronológicamente inversa (ListView)
-     */
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Milking'),
-      ),
-      body: _showForm(),
+      ), body: Column(
+      children: <Widget>[
+        _showForm(),
+        ..._showShowMilkingList(),
+      ],
+    ),
     );
   }
 
@@ -135,5 +143,34 @@ class _MilkingPageState extends State<MilkingPage> {
         height: 0.0,
       );
     }
+  }
+
+  List<Widget> _showShowMilkingList() {
+    return [
+      Divider(),
+      Center(
+        child: Text(
+          "Milking History",
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+      Expanded(
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: _milkings.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 50,
+              child: ListTile(
+                title: Text("${_milkings[index].amount.toString()}ml"),
+                trailing: Text(_milkings[index].dateTime.toString()),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+          const Divider(),
+        ),
+      ),
+    ];
   }
 }
