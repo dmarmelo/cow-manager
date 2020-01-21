@@ -1,4 +1,5 @@
 import 'package:cow_manager/model/animal.dart';
+import 'package:cow_manager/view/birth_page.dart';
 import 'package:cow_manager/view/milking_page.dart';
 import 'package:cow_manager/view/weighting_page.dart';
 import 'package:cow_manager/widgets/profile_more_options_sheet.dart';
@@ -84,14 +85,12 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
           title: Text('Pathology'),
           trailing: Text(widget.animal.pathology),
         ),
-        // TODO Mostrar o resultado da ultima pesagem
         ListTile(
-          title: Text('Weight'),
+          title: Text('Last Weighting'),
           trailing: Text(widget.animal.lastWeight.toString() + "Kg"),
         ),
-        // TODO Mostrar o resultado da ultima aleitação
         ListTile(
-          title: Text('Milking'),
+          title: Text('Last Milking'),
           trailing: Text(widget.animal.lastMilking.toString() + "ml"),
         ),
       ]).toList(),
@@ -105,7 +104,8 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
           return ProfileMoreOptionsSheet(
             callBackOptionTapped: moreOptionsSheetCallback,
           );
-        });
+        },
+    );
   }
 
   void moreOptionsSheetCallback(ProfileMoreOptions option) {
@@ -122,6 +122,13 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
             context,
             MaterialPageRoute(
                 builder: (context) => MilkingPage(animal: widget.animal)));
+        break;
+      }
+      case ProfileMoreOptions.BIRTH: {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BirthPage(animal: widget.animal)));
         break;
       }
     }

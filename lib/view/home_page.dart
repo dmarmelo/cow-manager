@@ -1,9 +1,7 @@
 import 'package:cow_manager/services/authentication.dart';
-import 'package:cow_manager/widgets/birth.dart';
 import 'package:cow_manager/widgets/new_animal.dart';
 import 'package:cow_manager/widgets/search_animal.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
@@ -31,7 +29,6 @@ class _HomePageState extends State<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     SearchAnimal(),
     NewAnimal(),
-    Birth(), // TODO Mover a página de nascimento para a lista de eventos no perfil??
   ];
 
   void _onItemTapped(int index) {
@@ -66,10 +63,6 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             title: Text('New Animal'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(FontAwesomeIcons.birthdayCake),
-            title: Text('Birth'),
           ),
         ],
         currentIndex: _selectedIndex,

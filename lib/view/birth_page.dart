@@ -1,9 +1,10 @@
 import 'package:cow_manager/model/animal.dart';
-import 'package:cow_manager/model/birth.dart' as prefix0;
+import 'package:cow_manager/model/birth.dart';
+import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:cow_manager/repository/birth_dao.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter/widgets.dart';
 
 class BirthPage extends StatefulWidget {
   BirthPage({Key key, this.animal}) : super(key: key);
@@ -17,12 +18,26 @@ class BirthPage extends StatefulWidget {
 class _BirthPageState extends State<BirthPage> {
 
   final _formKey = new GlobalKey<FormState>();
-  String _errorMessage;
-  var dateFormat = DateFormat('yyyy-MM-dd');
+  String _errorMessage = "";
+
   final TextEditingController _maleNumber = new TextEditingController();
   final TextEditingController _femaleNumber = new TextEditingController();
   final TextEditingController _stillbirths= new TextEditingController();
 
+  List<Birth> _births = new List();
+
+  @override
+  void initState() {
+    _errorMessage = "";
+    super.initState();
+
+    BirthDao().where("animalKey", widget.animal.key).then((list) {
+      setState(() {
+        _births.addAll(list);
+        _births.sort((a, b) => a.dateTime.compareTo(b.dateTime) * -1);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +45,12 @@ class _BirthPageState extends State<BirthPage> {
       appBar: new AppBar(
         title: new Text('Birth'),
       ),
-      body: _showForm(),
+      body: Column(
+        children: <Widget>[
+          _showForm(),
+          ..._showShowBirthList(),
+        ],
+      ),
     );
   }
 
@@ -47,7 +67,7 @@ class _BirthPageState extends State<BirthPage> {
               keyboardType: TextInputType.number,
               autofocus: false,
               decoration: new InputDecoration(
-                labelText: 'Male',
+                labelText: 'Males',
                 hintText: 'Enter a number of males...',
               ),
               validator: (value) =>
@@ -60,7 +80,7 @@ class _BirthPageState extends State<BirthPage> {
               keyboardType: TextInputType.number,
               autofocus: false,
               decoration: new InputDecoration(
-                labelText: 'Female',
+                labelText: 'Females',
                 hintText: 'Enter a number of females...',
               ),
               validator: (value) =>
@@ -110,9 +130,12 @@ class _BirthPageState extends State<BirthPage> {
       _errorMessage = "";
     });
     try {
-      var newBirth = new prefix0.Birth(
-          widget.animal.electronicId,
-          dateFormat.parse(new DateTime.now().toString()),
+      this.widget.animal.reproductionCycles++;
+      AnimalDao().update(this.widget.animal);
+
+      var newBirth = new Birth(
+          widget.animal.key,
+          new DateTime.now(),
         int.parse(_maleNumber.text.trim()),
         int.parse(_femaleNumber.text.trim()),
         int.parse(_stillbirths.text.trim()),
@@ -120,6 +143,7 @@ class _BirthPageState extends State<BirthPage> {
       BirthDao().create(newBirth).then((birth) {
         Navigator.pop(context);
       });
+
     } catch (e) {
       print('Error: $e');
       setState(() {
@@ -144,5 +168,41 @@ class _BirthPageState extends State<BirthPage> {
         height: 0.0,
       );
     }
+  }
+
+  List<Widget> _showShowBirthList() {
+    return [
+      Divider(),
+      Center(
+        child: Text(
+          "Birth History",
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
+      Expanded(
+        child: ListView.separated(
+          shrinkWrap: true,
+          itemCount: _births.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              //height: 50,
+              child: ListTile(
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Males: ${_births[index].maleNumber.toString()}"),
+                    Text("Females: ${_births[index].femaleNumber.toString()}"),
+                    Text("Still Births: ${_births[index].stillbirths.toString()}")
+                  ],
+                ),
+                trailing: Text(_births[index].dateTime.toString()),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) =>
+          const Divider(),
+        ),
+      ),
+    ];
   }
 }
