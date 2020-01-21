@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'dart:typed_data';
 
@@ -9,44 +10,56 @@ import 'BluetoothHelper.dart';
 
 ///
 class ChipFormField extends FormField<int> {
-  final TextEditingController _textEditingController;
+  static final TextEditingController _textEditingController = new TextEditingController();
   final String device;
   final onRead;
 
-  ChipFormField(context, this.device, this._textEditingController, this.onRead)
-      : super(builder: (FormFieldState<int> state) {
-    return Row(children: <Widget>[
-      Flexible(
-          child: Container(
-              margin: const EdgeInsets.only(left: 16.0),
-              child: TextFormField(
-                controller: _textEditingController,
+  ChipFormField(
+      context,
+      this.device,
+      this.onRead
+      ) : super(
+      builder: (FormFieldState<int> state) {
+        return Row(
+            children: <Widget>[
+              Flexible(
+                  child: Container(
+                      margin: const EdgeInsets.only(left:16.0),
+                      child: TextFormField(
+                        controller: _textEditingController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          labelText: 'Animal Eletronic Identifier',
+                          hintText: 'Enter or read animal chip...',
+                          //hintStyle: const TextStyle(color: Colors.grey),
+                        ),
+                        //onSubmitted: ...
+                      )
+                  )
+              ),
 
-                autofocus: false,
-                decoration: InputDecoration(
-                  labelText: 'Animal Eletronic Identifier',
-                  hintText: 'Enter or read animal chip...',
-                  //hintStyle: const TextStyle(color: Colors.grey),
+              Container(
+                margin: const EdgeInsets.only(top: 24.0),
+                child: IconButton(
+                    icon: const Icon(Icons.bluetooth),
+                    onPressed: () {
+                      showDialog(context: context, builder: (BuildContext context) {
+                        return ReadChipDialog(
+                            device,
+                                (chip) {
+                              _textEditingController.text = chip;
+                              onRead(chip);
+                            }
+                        );
+                      });
+                    }
                 ),
-                //onSubmitted: ...
-              ))),
-      Container(
-        margin: const EdgeInsets.only(top: 24.0),
-        child: IconButton(
-            icon: const Icon(Icons.bluetooth),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ReadChipDialog(device, (chip) {
-                      _textEditingController.text = chip;
-                      onRead(chip);
-                    });
-                  });
-            }),
-      ),
-    ]);
-  });
+              ),
+
+            ]
+        );
+      }
+  );
 
   String get chip => _textEditingController.text;
 }
@@ -59,11 +72,10 @@ class ReadChipDialog extends StatefulWidget {
   ReadChipDialog(this._deviceName, this._onRead);
 
   @override
-  _ReadChipDialogState createState() =>
-      _ReadChipDialogState(_deviceName, _onRead);
+  _ReadChipDialogState createState() => _ReadChipDialogState(_deviceName, _onRead);
 }
 
-class _ReadChipDialogState extends State<ReadChipDialog> {
+class _ReadChipDialogState  extends State<ReadChipDialog> {
   final _onRead;
   final String _deviceName;
   BuildContext _context;
@@ -78,8 +90,7 @@ class _ReadChipDialogState extends State<ReadChipDialog> {
   void initState() {
     super.initState();
 
-    print('[READ CHIP DIALOG] state: ' +
-        BluetoothHelper.bluetoothState.toString());
+    print('[READ CHIP DIALOG] state: ' + BluetoothHelper.bluetoothState.toString());
     if (BluetoothHelper.bluetoothState != BluetoothState.STATE_ON) {
       print('[READ CHIP DIALOG] turn on Bluetooth');
       _msg = 'ENABLING BLUETOOTH\n';
@@ -92,7 +103,8 @@ class _ReadChipDialogState extends State<ReadChipDialog> {
           _connectTo(_deviceName, _onRead);
         }
       });
-    } else {
+    }
+    else {
       _msg = 'CONNECTING TO READER\n' + _deviceName;
       _connectTo(_deviceName, _onRead);
     }
@@ -102,8 +114,7 @@ class _ReadChipDialogState extends State<ReadChipDialog> {
   Widget build(BuildContext context) {
     _context = context;
 
-    _text = Text(
-      _msg,
+    _text = Text(_msg,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 16.0,
@@ -180,60 +191,49 @@ class _ReadChipDialogState extends State<ReadChipDialog> {
       if (bluetoothDevice.name == deviceName) {
         try {
           // establish connection to the device
-          print('[READ CHIP DIALOG] _connectTo Connected to the device ' +
-              bluetoothDevice.name);
-          setState(() {
-            _msg = 'CONNECTING TO READER\n' + bluetoothDevice.name;
-          });
+          print('[READ CHIP DIALOG] _connectTo Connected to the device ' + bluetoothDevice.name);
+          setState(() {_msg = 'CONNECTING TO READER\n' + bluetoothDevice.name;});
 
-          _connection =
-          await BluetoothConnection.toAddress(bluetoothDevice.address);
+          _connection = await BluetoothConnection.toAddress(bluetoothDevice.address);
           _connection.input.listen((Uint8List data) {
             data.forEach((b) {
               if (b == 13) {
                 // process message
-                String chip = ascii
-                    .decode(_blueMessage.sublist(9, 25))
-                    .replaceAll(' ', '');
+                String chip = ascii.decode(_blueMessage.sublist(9, 25)).replaceAll(' ', '');
                 onRead(chip);
                 _blueMessage = new List<int>();
                 _disconnect();
                 Navigator.of(_context).pop();
-              } else {
+              }
+              else {
                 _blueMessage.add(b);
               }
             });
           }).onDone(() {
-            print(
-                '[READ CHIP DIALOG] _connectTo Disconnected by remote request');
+            print('[READ CHIP DIALOG] _connectTo Disconnected by remote request');
           });
 
           int delays = 0;
           Future.doWhile(() {
             if (_connection.isConnected) {
-              setState(() {
-                _msg = 'PASS READER AT THE\nANIMAL';
-              });
+              setState(() {_msg = 'PASS READER AT THE\nANIMAL';});
               return false;
-            } else if (delays > 40) {
-              setState(() {
-                _msg = 'CANNOT CONNECT TO\nREADER';
-              });
+            }
+            else if (delays > 40) {
+              setState(() {_msg = 'CANNOT CONNECT TO\nREADER';});
               return false;
-            } else {
+            }
+            else {
               Future.delayed(Duration(milliseconds: 100), () {
                 delays++;
               });
               return true;
             }
-          }).then((_) {});
-        } catch (exception) {
-          print(
-              '[READ CHIP DIALOG] _connectTo Cannot connect, exception occured ' +
-                  exception.toString());
-          setState(() {
-            _msg = 'CANNOT CONNECT TO\nREADER';
-          });
+          }).then((_){});
+        }
+        catch (exception) {
+          print('[READ CHIP DIALOG] _connectTo Cannot connect, exception occured ' + exception.toString());
+          setState(() {_msg = 'CANNOT CONNECT TO\nREADER';});
         }
       }
     });

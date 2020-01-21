@@ -27,17 +27,10 @@ class _NewAnimalState extends State<NewAnimal> {
   final TextEditingController _birthController = new TextEditingController();
   String _gender = "Macho";
   final TextEditingController _profileController = new TextEditingController();
-  final TextEditingController _effectiveController =
-      new TextEditingController();
+  final TextEditingController _effectiveController = new TextEditingController();
   final TextEditingController _lotController = new TextEditingController();
   final TextEditingController _parkController = new TextEditingController();
-  final TextEditingController _reproductionCyclesController =
-      new TextEditingController();
-  final TextEditingController _pathologyController =
-      new TextEditingController();
-  final TextEditingController _weightController = new TextEditingController();
-
-  final TextEditingController _amountController = new TextEditingController();
+  final TextEditingController _pathologyController = new TextEditingController();
 
   String _errorMessage;
 
@@ -46,7 +39,7 @@ class _NewAnimalState extends State<NewAnimal> {
     _errorMessage = "";
     super.initState();
 
-    _chipFormField = ChipFormField(context, 'HC-06', TextEditingController(), (chip) {
+    _chipFormField = ChipFormField(context, 'HC-06', (chip) {
       print('CHIP: ' + chip);
     });
   }
@@ -77,10 +70,10 @@ class _NewAnimalState extends State<NewAnimal> {
             _effectiveController.text.trim(),
             _lotController.text.trim(),
             _parkController.text.trim(),
-            int.parse(_reproductionCyclesController.text.trim()),
+            0,
             _pathologyController.text.trim(),
-            double.parse(_weightController.text.trim()),
-            double.parse(_amountController.text.trim()),
+            0.0,
+            0.0,
             widget.userId);
 
         AnimalDao().create(newAnimal).then((animal) {
@@ -245,20 +238,6 @@ class _NewAnimalState extends State<NewAnimal> {
                 controller: _parkController,
               ),
               new TextFormField(
-                // ReproductionCycles
-                maxLines: 1,
-                keyboardType: TextInputType.numberWithOptions(),
-                autofocus: false,
-                decoration: new InputDecoration(
-                  labelText: 'Animal Reproduction Cycles',
-                  hintText: 'Enter animal Reproduction Cycles...',
-                ),
-                validator: (value) => value.isEmpty
-                    ? 'Reproduction Cycles can\'t be empty'
-                    : null,
-                controller: _reproductionCyclesController,
-              ),
-              new TextFormField(
                 // Pathology
                 maxLines: 1,
                 keyboardType: TextInputType.text,
@@ -270,19 +249,6 @@ class _NewAnimalState extends State<NewAnimal> {
                 validator: (value) =>
                     value.isEmpty ? 'Pathology can\'t be empty' : null,
                 controller: _pathologyController,
-              ),
-              new TextFormField(
-                // Weight
-                maxLines: 1,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                autofocus: false,
-                decoration: new InputDecoration(
-                  labelText: 'Animal Weight',
-                  hintText: 'Enter animal Weight...',
-                ),
-                validator: (value) =>
-                    value.isEmpty ? 'Weight can\'t be empty' : null,
-                controller: _weightController,
               ),
               showPrimaryButton(),
               showErrorMessage(),

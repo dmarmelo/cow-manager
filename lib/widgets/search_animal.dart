@@ -20,7 +20,7 @@ class _SearchAnimalState extends State<SearchAnimal> {
     // create a new ChipFormField widget to get an animal identifier
     // use _chipFormField.chip to get the animal identifier whenever needed
     //
-    _chipFormField = ChipFormField(context, 'HC-06', TextEditingController(), (chip) {
+    _chipFormField = ChipFormField(context, 'HC-06', (chip) {
       print('CHIP: ' + chip);
     });
   }
