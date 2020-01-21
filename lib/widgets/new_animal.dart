@@ -84,6 +84,7 @@ class _NewAnimalState extends State<NewAnimal> {
             widget.userId);
 
         AnimalDao().create(newAnimal).then((animal) {
+          resetForm();
           Navigator.push(
               context,
               MaterialPageRoute(
