@@ -101,10 +101,23 @@ class _NewAnimalState extends State<NewAnimal> {
     }
   }
 
-  // TODO Por botão para fazer reset ao form??
   void resetForm() {
-    _formKey.currentState.reset();
-    _errorMessage = "";
+    setState(() {
+      // Flutter form reset is not working properly...
+      //_formKey.currentState.reset();
+
+      _earringController.text = "";
+      _breedController.text = "";
+      _birthController.text = "";
+      _gender = "Macho";
+      _profileController.text = "";
+      _effectiveController.text = "";
+      _lotController.text = "";
+      _parkController.text = "";
+      _pathologyController.text = "";
+
+      _errorMessage = "";
+    });
   }
 
   @override
