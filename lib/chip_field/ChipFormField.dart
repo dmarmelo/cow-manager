@@ -27,7 +27,7 @@ class ChipFormField extends FormField<int> {
                       margin: const EdgeInsets.only(left:16.0),
                       child: TextFormField(
                         controller: _textEditingController,
-                        autofocus: true,
+                        //autofocus: true,
                         decoration: InputDecoration(
                           labelText: 'Animal Eletronic Identifier',
                           hintText: 'Enter or read animal chip...',

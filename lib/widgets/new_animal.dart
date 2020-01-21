@@ -45,20 +45,27 @@ class _NewAnimalState extends State<NewAnimal> {
   }
 
   // Check if form is valid before perform login or signup
-  bool validateAndSave() { // TODO verificar se o animal já existe
+  Future<bool> validateAndSave() async {
     final form = _formKey.currentState;
     if (form.validate() && _chipFormField.chip.length > 0) {
+      var animals = await AnimalDao().where("id eletrónica", _chipFormField.chip);
+      if (animals.length > 0) {
+        setState(() {
+          _errorMessage = "Already exists one animal with this eletronic identifier!";
+        });
+        return false;
+      }
       form.save();
       return true;
     }
     return false;
   }
 
-  void validateAndSubmit() {
+  Future validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
     });
-    if (validateAndSave()) {
+    if (await validateAndSave()) {
       try {
         var newAnimal = new Animal(
             _chipFormField.chip,
@@ -83,7 +90,6 @@ class _NewAnimalState extends State<NewAnimal> {
                   builder: (context) => AnimalProfilePage(animal: animal)));
         });
 
-        Navigator.pop(context);
       } catch (e) {
         print('Error: $e');
         setState(() {
@@ -250,8 +256,8 @@ class _NewAnimalState extends State<NewAnimal> {
                     value.isEmpty ? 'Pathology can\'t be empty' : null,
                 controller: _pathologyController,
               ),
-              showPrimaryButton(),
               showErrorMessage(),
+              showPrimaryButton(),
             ],
           ),
         ));
@@ -276,13 +282,20 @@ class _NewAnimalState extends State<NewAnimal> {
 
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
-      return new Text(
-        _errorMessage,
-        style: TextStyle(
-            fontSize: 13.0,
-            color: Colors.red,
-            height: 1.0,
-            fontWeight: FontWeight.w300),
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: new Text(
+              _errorMessage,
+              style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.red,
+                  height: 1.0),
+            ),
+          ),
+        ],
       );
     } else {
       return new Container(
