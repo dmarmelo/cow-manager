@@ -4,6 +4,7 @@ import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:cow_manager/repository/milking_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MilkingPage extends StatefulWidget {
   MilkingPage({Key key, this.animal}) : super(key: key);
@@ -109,6 +110,7 @@ class _MilkingPageState extends State<MilkingPage> {
           double.parse(_milkingController.text.trim())
       );
       MilkingDao().create(newMilking).then((milking) {
+        Fluttertoast.showToast(msg: "Milking Added Sucessfully!", gravity: ToastGravity.BOTTOM);
         Navigator.pop(context);
       });
 

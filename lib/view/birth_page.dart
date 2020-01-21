@@ -5,6 +5,7 @@ import 'package:cow_manager/repository/birth_dao.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BirthPage extends StatefulWidget {
   BirthPage({Key key, this.animal}) : super(key: key);
@@ -141,6 +142,7 @@ class _BirthPageState extends State<BirthPage> {
         int.parse(_stillbirths.text.trim()),
       );
       BirthDao().create(newBirth).then((birth) {
+        Fluttertoast.showToast(msg: "Birth Added Sucessfully!", gravity: ToastGravity.BOTTOM);
         Navigator.pop(context);
       });
 

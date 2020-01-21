@@ -4,6 +4,7 @@ import 'package:cow_manager/repository/animal_dao.dart';
 import 'package:cow_manager/repository/weighting_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class WeightingPage extends StatefulWidget {
   WeightingPage({Key key, this.animal}) : super(key: key);
@@ -110,6 +111,7 @@ class _WeightingPageState extends State<WeightingPage> {
           double.parse(_weightingController.text.trim())
       );
       WeightingDao().create(newWeighting).then((weighting) {
+        Fluttertoast.showToast(msg: "Weighting Added Sucessfully!", gravity: ToastGravity.BOTTOM);
         Navigator.pop(context);
       });
 
