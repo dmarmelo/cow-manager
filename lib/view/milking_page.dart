@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// [Widget] da página de inserção de aleitações dos animais.
 class MilkingPage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe o [Animal] a inserir e mostrar aleitações.
   MilkingPage({Key key, this.animal}) : super(key: key);
 
   final Animal animal;
@@ -15,12 +17,16 @@ class MilkingPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _MilkingPageState();
 }
 
+/// Estado do [Widget] da página de inserção de aleitações dos animais, onde é
+/// possível inserir as aleitações e visualizar uma lista de todas as aleitações
+/// já registadas por ordem cronológicamente inversa.
 class _MilkingPageState extends State<MilkingPage> {
   final _formKey = new GlobalKey<FormState>();
 
   final TextEditingController _milkingController = new TextEditingController();
   String _errorMessage;
 
+  /// Lista de aleitações do animal.
   List<Milking> _milkings = new List();
 
   @override
@@ -51,6 +57,7 @@ class _MilkingPageState extends State<MilkingPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do formulário de inserção de aleitações.
   Widget _showForm() {
     return new Container(
       padding: EdgeInsets.all(16.0),
@@ -67,8 +74,7 @@ class _MilkingPageState extends State<MilkingPage> {
                 labelText: 'Milking',
                 hintText: 'Enter a Milking...',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'Milking can\'t be empty' : null,
+              validator: (value) => value.isEmpty ? 'Milking can\'t be empty' : null,
               controller: _milkingController,
             ),
             showPrimaryButton(),
@@ -79,23 +85,27 @@ class _MilkingPageState extends State<MilkingPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do botão para inserir a aleitação.
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.orange,
-            child: new Text('Save Milking',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
-          ),
-        ));
+      padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
+      child: SizedBox(
+        height: 40.0,
+        child: new RaisedButton(
+          elevation: 5.0,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
+          color: Colors.orange,
+          child: new Text('Save Milking',
+              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+          onPressed: validateAndSubmit,
+        ),
+      ),
+    );
   }
 
+  /// Valida o formulário, insere a aleitação na base de dados do Firebase e
+  /// atualiza o valor da última aleitação no objeto do animal.
   void validateAndSubmit() {
     setState(() {
       _errorMessage = "";
@@ -123,6 +133,7 @@ class _MilkingPageState extends State<MilkingPage> {
     }
   }
 
+  /// Constrói e retorna o [Widget] para mostrar a mensagem de erro.
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
@@ -133,13 +144,16 @@ class _MilkingPageState extends State<MilkingPage> {
             height: 1.0,
             fontWeight: FontWeight.w300),
       );
-    } else {
+    }
+    else {
       return new Container(
         height: 0.0,
       );
     }
   }
 
+  /// Constrói e retorna a [List] de [Widget]'s que constituem a lista para
+  /// visualização de todas as aleitações do animal registadas.
   List<Widget> _showShowMilkingList() {
     return [
       Divider(),
@@ -163,7 +177,7 @@ class _MilkingPageState extends State<MilkingPage> {
             );
           },
           separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
+          const Divider(),
         ),
       ),
     ];

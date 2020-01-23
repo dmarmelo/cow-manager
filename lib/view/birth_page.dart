@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// [Widget] da página de inserção de partos dos animais.
 class BirthPage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe o [Animal] a inserir e mostrar os partos.
   BirthPage({Key key, this.animal}) : super(key: key);
 
   final Animal animal;
@@ -16,6 +18,9 @@ class BirthPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _BirthPageState();
 }
 
+/// Estado do [Widget] da página de inserção de partos dos animais, onde é
+/// possível inserir os partos e visualizar uma lista de todos os partos
+/// já registados por ordem cronológicamente inversa.
 class _BirthPageState extends State<BirthPage> {
 
   final _formKey = new GlobalKey<FormState>();
@@ -25,6 +30,7 @@ class _BirthPageState extends State<BirthPage> {
   final TextEditingController _femaleNumber = new TextEditingController();
   final TextEditingController _stillbirths= new TextEditingController();
 
+  /// Lista de partos do animal.
   List<Birth> _births = new List();
 
   @override
@@ -55,6 +61,7 @@ class _BirthPageState extends State<BirthPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do formulário de inserção de partos.
   Widget _showForm() {
     return new Container(
       padding: EdgeInsets.all(16.0),
@@ -109,23 +116,27 @@ class _BirthPageState extends State<BirthPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do botão para inserir ao parto.
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.orange,
-            child: new Text('Save birth',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
-          ),
-        ));
+      padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
+      child: SizedBox(
+        height: 40.0,
+        child: new RaisedButton(
+          elevation: 5.0,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(30.0)),
+          color: Colors.orange,
+          child: new Text('Save birth',
+              style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+          onPressed: validateAndSubmit,
+        ),
+      ),
+    );
   }
 
+  /// Valida o formulário, insere o parto na base de dados do Firebase e
+  /// incrementa os ciclos de reprodução do objeto do animal.
   void validateAndSubmit() {
     setState(() {
       _errorMessage = "";
@@ -155,6 +166,7 @@ class _BirthPageState extends State<BirthPage> {
     }
   }
 
+  /// Constrói e retorna o [Widget] para mostrar a mensagem de erro.
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
@@ -165,13 +177,16 @@ class _BirthPageState extends State<BirthPage> {
             height: 1.0,
             fontWeight: FontWeight.w300),
       );
-    } else {
+    }
+    else {
       return new Container(
         height: 0.0,
       );
     }
   }
 
+  /// Constrói e retorna a [List] de [Widget]'s que constituem a lista para
+  /// visualização de todas os partos do animal registados.
   List<Widget> _showShowBirthList() {
     return [
       Divider(),

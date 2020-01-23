@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+/// [Widget] da página de inserção de pesagens dos animais.
 class WeightingPage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe o [Animal] a inserir e mostrar pesagens.
   WeightingPage({Key key, this.animal}) : super(key: key);
 
   final Animal animal;
@@ -15,12 +17,16 @@ class WeightingPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _WeightingPageState();
 }
 
+/// Estado do [Widget] da página de inserção de pesagens dos animais, onde é
+/// possível inserir as pesagens e visualizar uma lista de todas as pesagens
+/// já registadas por ordem cronológicamente inversa.
 class _WeightingPageState extends State<WeightingPage> {
   final _formKey = new GlobalKey<FormState>();
 
   final TextEditingController _weightingController = new TextEditingController();
   String _errorMessage;
 
+  /// Lista de pesagens do animal.
   List<Weighting> _weightings = new List();
 
   @override
@@ -51,6 +57,7 @@ class _WeightingPageState extends State<WeightingPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do formulário de inserção de pesagens.
   Widget _showForm() {
     return new Container(
       padding: EdgeInsets.all(16.0),
@@ -67,8 +74,7 @@ class _WeightingPageState extends State<WeightingPage> {
                 labelText: 'Weighting',
                 hintText: 'Enter a Weight...',
               ),
-              validator: (value) =>
-                  value.isEmpty ? 'Weighting can\'t be empty' : null,
+              validator: (value) => value.isEmpty ? 'Weighting can\'t be empty' : null,
               controller: _weightingController,
             ),
             showPrimaryButton(),
@@ -79,6 +85,7 @@ class _WeightingPageState extends State<WeightingPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] do botão para inserir a pesagem.
   Widget showPrimaryButton() {
     return new Padding(
       padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
@@ -97,6 +104,8 @@ class _WeightingPageState extends State<WeightingPage> {
     );
   }
 
+  /// Valida o formulário, insere a pesagem na base de dados do Firebase e
+  /// atualiza o valor da última pesagem no objeto do animal.
   void validateAndSubmit() {
     setState(() {
       _errorMessage = "";
@@ -124,6 +133,7 @@ class _WeightingPageState extends State<WeightingPage> {
     }
   }
 
+  /// Constrói e retorna o [Widget] para mostrar a mensagem de erro.
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(
@@ -134,13 +144,16 @@ class _WeightingPageState extends State<WeightingPage> {
             height: 1.0,
             fontWeight: FontWeight.w300),
       );
-    } else {
+    }
+    else {
       return new Container(
         height: 0.0,
       );
     }
   }
 
+  /// Constrói e retorna a [List] de [Widget]'s que constituem a lista para
+  /// visualização de todas as pesagens do animal registadas.
   List<Widget> _showShowWeightingList() {
     return [
       Divider(),

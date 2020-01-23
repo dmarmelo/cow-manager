@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+/// Enumerado com as possíveis ações do menu de mais opções.
 enum ProfileMoreOptions { WEIGHTING, MILKING, BIRTH }
 
+/// [Widget] do menu de mais opções do perfil do animal, onde é possível escolher
+/// uma da opções definidas no enumerado [ProfileMoreOptions].
 class ProfileMoreOptionsSheet extends StatelessWidget {
   final void Function(ProfileMoreOptions) callBackOptionTapped;
 

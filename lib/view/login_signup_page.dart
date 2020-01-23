@@ -1,9 +1,10 @@
-
-
-import 'package:flutter/material.dart';
 import 'package:cow_manager/services/authentication.dart';
+import 'package:flutter/material.dart';
 
+/// [Widget] da página de login e signup.
 class LoginSignupPage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe a classe de autenticação [BaseAuth]
+  /// e o callback para invocar após o login bem sucedido.
   LoginSignupPage({this.auth, this.loginCallback});
 
   final BaseAuth auth;
@@ -13,6 +14,8 @@ class LoginSignupPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _LoginSignupPageState();
 }
 
+/// Estado do [Widget] da página de login e sign up, onde é gerido o processo
+/// de login e de sign up.
 class _LoginSignupPageState extends State<LoginSignupPage> {
   final _formKey = new GlobalKey<FormState>();
 
@@ -31,7 +34,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     super.initState();
   }
 
-  // Check if form is valid before perform login or signup
+  /// Valida e guarda o formulário.
   bool validateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -41,7 +44,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     return false;
   }
 
-  // Perform login or signup
+  /// Valida e processa o login ou o signup.
   void validateAndSubmit() async {
     setState(() {
       _errorMessage = "";
@@ -53,7 +56,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
           print('Signed in: $userId');
-        } else {
+        }
+        else {
           userId = await widget.auth.signUp(_email, _password);
           //widget.auth.sendEmailVerification();
           //_showVerifyEmailSentDialog();
@@ -75,11 +79,13 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     });
   }
 
+  /// Limpa o formulário.
   void resetForm() {
     _formKey.currentState.reset();
     _errorMessage = "";
   }
 
+  /// Alterna o modo do formulário entre login e sign up.
   void toggleFormMode() {
     resetForm();
     setState(() {
@@ -90,18 +96,21 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Cow Manager', style: TextStyle(fontWeight: FontWeight.bold)),
-          centerTitle: true,
-        ),
-        body: Stack(
-          children: <Widget>[
-            _showForm(),
-            _showCircularProgress(),
-          ],
-        ));
+      appBar: new AppBar(
+        title: new Text(
+            'Cow Manager', style: TextStyle(fontWeight: FontWeight.bold)),
+        centerTitle: true,
+      ),
+      body: Stack(
+        children: <Widget>[
+          _showForm(),
+          _showCircularProgress(),
+        ],
+      ),
+    );
   }
 
+  /// Constrói e retorna o [Widget] de espera.
   Widget _showCircularProgress() {
     if (_isLoading) {
       return Center(child: CircularProgressIndicator());
@@ -112,48 +121,28 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
-//  void _showVerifyEmailSentDialog() {
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) {
-//        // return object of type Dialog
-//        return AlertDialog(
-//          title: new Text("Verify your account"),
-//          content:
-//              new Text("Link to verify account has been sent to your email"),
-//          actions: <Widget>[
-//            new FlatButton(
-//              child: new Text("Dismiss"),
-//              onPressed: () {
-//                toggleFormMode();
-//                Navigator.of(context).pop();
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
-
+  /// Constrói e retorna o [Widget] do formulário.
   Widget _showForm() {
     return new Container(
-        padding: EdgeInsets.all(16.0),
-        child: new Form(
-          key: _formKey,
-          child: new ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              showLogo(),
-              showEmailInput(),
-              showPasswordInput(),
-              showPrimaryButton(),
-              showSecondaryButton(),
-              showErrorMessage(),
-            ],
-          ),
-        ));
+      padding: EdgeInsets.all(16.0),
+      child: new Form(
+        key: _formKey,
+        child: new ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            showLogo(),
+            showEmailInput(),
+            showPasswordInput(),
+            showPrimaryButton(),
+            showSecondaryButton(),
+            showErrorMessage(),
+          ],
+        ),
+      ),
+    );
   }
 
+  /// Constrói e retorna o [Widget] do logo da aplicação.
   Widget showLogo() {
     return new Hero(
       tag: 'hero',
@@ -168,6 +157,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] de inserção do email.
   Widget showEmailInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 0.0),
@@ -176,17 +166,19 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         keyboardType: TextInputType.emailAddress,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Email',
-            icon: new Icon(
-              Icons.mail,
-              color: Colors.black,
-            )),
+          hintText: 'Email',
+          icon: new Icon(
+            Icons.mail,
+            color: Colors.black,
+          ),
+        ),
         validator: (value) => value.isEmpty ? 'Email can\'t be empty' : null,
         onSaved: (value) => _email = value.trim(),
       ),
     );
   }
 
+  /// Constrói e retorna o [Widget] de inserção da password.
   Widget showPasswordInput() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
@@ -195,42 +187,52 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         obscureText: true,
         autofocus: false,
         decoration: new InputDecoration(
-            hintText: 'Password',
-            icon: new Icon(
-              Icons.lock,
-              color: Colors.black,
-            )),
+          hintText: 'Password',
+          icon: new Icon(
+            Icons.lock,
+            color: Colors.black,
+          ),
+        ),
         validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
         onSaved: (value) => _password = value.trim(),
       ),
     );
   }
 
+  /// Constrói e retorna o [Widget] do botão de login/sign up.
   Widget showPrimaryButton() {
     return new Padding(
-        padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
-        child: SizedBox(
-          height: 40.0,
-          child: new RaisedButton(
-            elevation: 5.0,
-            shape: new RoundedRectangleBorder(
-                borderRadius: new BorderRadius.circular(30.0)),
-            color: Colors.orange,
-            child: new Text(_isLoginForm ? 'Login' : 'Create account',
-                style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-            onPressed: validateAndSubmit,
+      padding: EdgeInsets.fromLTRB(50.0, 25.0, 50.0, 0.0),
+      child: SizedBox(
+        height: 40.0,
+        child: new RaisedButton(
+          elevation: 5.0,
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0),
           ),
-        ));
+          color: Colors.orange,
+          child: new Text(_isLoginForm ? 'Login' : 'Create account',
+            style: new TextStyle(fontSize: 20.0, color: Colors.white),
+          ),
+          onPressed: validateAndSubmit,
+        ),
+      ),
+    );
   }
 
+  /// Constrói e retorna o [Widget] do botão para alterar entre os modos de
+  /// login e sign up do formulário.
   Widget showSecondaryButton() {
     return new FlatButton(
         child: new Text(
-            _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
-            style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-        onPressed: toggleFormMode);
+          _isLoginForm ? 'Create an account' : 'Have an account? Sign in',
+          style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300),
+        ),
+        onPressed: toggleFormMode
+    );
   }
 
+  /// Constrói e retorna o [Widget] para mostrar a mensagem de erro.
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
       return new Text(

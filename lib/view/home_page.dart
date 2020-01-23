@@ -3,7 +3,11 @@ import 'package:cow_manager/widgets/new_animal.dart';
 import 'package:cow_manager/widgets/search_animal.dart';
 import 'package:flutter/material.dart';
 
+/// [Widget] da página inicial da aplicação.
 class HomePage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe a classe de autenticação [BaseAuth],
+  /// o [userId] e o callback para invocar para efetuar o logout a pedido do
+  /// utilizador.
   HomePage({Key key, this.auth, this.userId, this.logoutCallback})
       : super(key: key);
 
@@ -15,7 +19,11 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _HomePageState();
 }
 
+/// Estado do [Widget] da página inicial da aplicação, de onde é possível
+/// aceder a todas as funcionalidades da aplicação.
 class _HomePageState extends State<HomePage> {
+
+  /// Efetua o logout do utilizador.
   signOut() async {
     try {
       await widget.auth.signOut();
@@ -25,12 +33,15 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  int _selectedIndex = 0;
+  /// Indice da opção selecionada na barra de navegação inferior.
+  static int _selectedIndex = 0;
+  /// Lista de [Widgets] disponíveis na barra de navegação inderior.
   static List<Widget> _widgetOptions = <Widget>[
     SearchAnimal(),
     NewAnimal(),
   ];
 
+  /// Aualiza o indice do item na barra de navegação inferior.
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -46,8 +57,10 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           new FlatButton(
               child: new Text('Logout',
-                  style: new TextStyle(fontSize: 17.0, color: Colors.white)),
-              onPressed: signOut)
+                style: new TextStyle(fontSize: 17.0, color: Colors.white),
+              ),
+              onPressed: signOut
+          )
         ],
       ),
       body: IndexedStack(

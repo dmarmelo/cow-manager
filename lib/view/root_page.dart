@@ -1,15 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:cow_manager/view/login_signup_page.dart';
 import 'package:cow_manager/services/authentication.dart';
 import 'package:cow_manager/view/home_page.dart';
+import 'package:cow_manager/view/login_signup_page.dart';
+import 'package:flutter/material.dart';
 
-
+/// Enumerado que representa os possivéis estados da autenticação.
 enum AuthStatus {
   NOT_DETERMINED,
   NOT_LOGGED_IN,
   LOGGED_IN,
 }
 
+/// [Widget] da página raiz da aplicação.
 class RootPage extends StatefulWidget {
   RootPage({this.auth});
 
@@ -19,6 +20,9 @@ class RootPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _RootPageState();
 }
 
+/// Estado da página raiz da aplicação, onde é gerido a autenticação.
+/// Consoante o estado da autenticação é mostrado o [Widget] de autenticação
+/// ou o [Widget] da páginal inicial da aplicação após autenticação.
 class _RootPageState extends State<RootPage> {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   String _userId = "";
@@ -31,12 +35,13 @@ class _RootPageState extends State<RootPage> {
         if (user != null) {
           _userId = user?.uid;
         }
-        authStatus =
-            user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
+        authStatus = user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
       });
     });
   }
 
+  /// Método para ser invocado do [Widget] de autenticação para atualizar
+  /// o estado da autenticação.
   void loginCallback() {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
@@ -48,6 +53,8 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  /// Método para ser invocado do [Widget] da página inicial para atualizar
+  /// o estado da autenticação.
   void logoutCallback() {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
@@ -55,6 +62,7 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
+  /// Constrói e retorna o [Widget] para o ecrã de espera.
   Widget buildWaitingScreen() {
     return Scaffold(
       body: Container(
@@ -83,7 +91,8 @@ class _RootPageState extends State<RootPage> {
             auth: widget.auth,
             logoutCallback: logoutCallback,
           );
-        } else
+        }
+        else
           return buildWaitingScreen();
         break;
       default:

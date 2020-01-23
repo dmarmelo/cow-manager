@@ -17,12 +17,12 @@ abstract class AbstractDao<CLAZZ extends AbstractDocument> {
   /// Maps the object key and all fields from a map to the actual object class.
   CLAZZ mapToClass(String key, Map<String, dynamic> values);
 
-  /// Maps the object fileld from a [DataSnapshot] to the actual object.
+  /// Maps the object field from a [DataSnapshot] to the actual object.
   CLAZZ snapshotToClass(DataSnapshot snapshot) {
     return mapToClass(snapshot.key, snapshot.value);
   }
 
-  /// Crates a new object in the collection and returns it.
+  /// Creates a new object in the collection and returns it.
   Future<CLAZZ> create(CLAZZ obj) {
     var newKey = ref.push().key;
     var future = ref.child(newKey).set(obj.toJson());

@@ -6,16 +6,19 @@ import 'package:cow_manager/widgets/profile_more_options_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// [Widget] do perfil de um animal.
 class AnimalProfilePage extends StatefulWidget {
+  /// Cria uma instância do [Widget]. Recebe o [Animal] a mostra o perfil.
   AnimalProfilePage({Key key, this.animal}) : super(key: key);
 
   final Animal animal;
-
 
   @override
   State<StatefulWidget> createState() => new _AnimalProfilePageState();
 }
 
+/// Estado do [Widget] do perfil de um animal, onde é possível vizualizar as
+/// informações do animal e ainda efetuar ações sobre este.
 class _AnimalProfilePageState extends State<AnimalProfilePage> {
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,8 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
     );
   }
 
+  /// Constrói e retorna o [Widget] com a lista de propriedades que constituem
+  /// o objeto [Animal].
   Widget _showProfile() {
     return new ListView(
       children: ListTile.divideTiles(context: context, tiles: [
@@ -97,17 +102,20 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
     );
   }
 
+  /// Abre o menu de mais opções para efetuar ações sobre o animal.
   void bottomSheet(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext ctx) {
-          return ProfileMoreOptionsSheet(
-            callBackOptionTapped: moreOptionsSheetCallback,
-          );
-        },
+      context: context,
+      builder: (BuildContext ctx) {
+        return ProfileMoreOptionsSheet(
+          callBackOptionTapped: moreOptionsSheetCallback,
+        );
+      },
     );
   }
 
+  /// Callback que é executado pelo menu do mais opções [ProfileMoreOptionsSheet]
+  /// para abrir a respetiva página da ações escolhida no menu.
   void moreOptionsSheetCallback(ProfileMoreOptions option) {
     switch (option) {
       case ProfileMoreOptions.WEIGHTING: {
