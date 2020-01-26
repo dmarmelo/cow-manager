@@ -27,4 +27,6 @@ abstract class AnimalEvent extends AbstractDocument {
     };
   }
 
+  get dateTimeStr => dateTimeFormatter.format(dateTime);
+
 }

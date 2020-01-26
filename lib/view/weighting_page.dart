@@ -172,7 +172,7 @@ class _WeightingPageState extends State<WeightingPage> {
               height: 50,
               child: ListTile(
                 title: Text("${_weightings[index].weight.toString()}kg"),
-                trailing: Text(_weightings[index].dateTime.toString()),
+                trailing: Text(_weightings[index].dateTimeStr),
               ),
             );
           },

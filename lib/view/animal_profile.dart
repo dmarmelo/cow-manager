@@ -60,7 +60,7 @@ class _AnimalProfilePageState extends State<AnimalProfilePage> {
         ),
         ListTile(
           title: Text('Birth'),
-          trailing: Text(widget.animal.birth.toString().substring(0, 10)),
+          trailing: Text(widget.animal.birthStr),
         ),
         ListTile(
           title: Text('Gender'),

@@ -78,4 +78,6 @@ class Animal extends AbstractDocument {
     };
   }
 
+  get birthStr => dateFormatter.format(birth);
+
 }

@@ -172,7 +172,7 @@ class _MilkingPageState extends State<MilkingPage> {
               height: 50,
               child: ListTile(
                 title: Text("${_milkings[index].amount.toString()}ml"),
-                trailing: Text(_milkings[index].dateTime.toString()),
+                trailing: Text(_milkings[index].dateTimeStr),
               ),
             );
           },

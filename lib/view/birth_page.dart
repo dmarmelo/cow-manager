@@ -212,7 +212,7 @@ class _BirthPageState extends State<BirthPage> {
                     Text("Still Births: ${_births[index].stillbirths.toString()}")
                   ],
                 ),
-                trailing: Text(_births[index].dateTime.toString()),
+                trailing: Text(_births[index].dateTimeStr),
               ),
             );
           },

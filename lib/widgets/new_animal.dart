@@ -82,7 +82,7 @@ class _NewAnimalState extends State<NewAnimal> {
             _chipFormField.chip,
             _earringController.text.trim(),
             _breedController.text.trim(),
-            dateFormat.parse(_birthController.text.trim()),
+            Animal.dateFormatter.parse(_birthController.text.trim()),
             _gender,
             _profileController.text.trim(),
             _effectiveController.text.trim(),
@@ -173,7 +173,7 @@ class _NewAnimalState extends State<NewAnimal> {
                 controller: _breedController,
               ),
               new DateTimeField( // Birth Date
-                format: dateFormat,
+                format: Animal.dateFormatter,
                 decoration: new InputDecoration(
                   labelText: 'Animal Birth Date',
                   hintText: 'Enter animal Birth Date...',
