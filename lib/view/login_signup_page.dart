@@ -56,16 +56,18 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         if (_isLoginForm) {
           userId = await widget.auth.signIn(_email, _password);
           print('Signed in: $userId');
+          if (userId != null && userId.length > 0) {
+            widget.loginCallback();
+          }
         }
         else {
           userId = await widget.auth.signUp(_email, _password);
-          //widget.auth.sendEmailVerification();
-          //_showVerifyEmailSentDialog();
           print('Signed up user: $userId');
+          toggleFormMode();
         }
-        if (userId != null && userId.length > 0 && _isLoginForm) {
+        /*if (userId != null && userId.length > 0 && _isLoginForm) {
           widget.loginCallback();
-        }
+        }*/
       } catch (e) {
         print('Error: $e');
         setState(() {
@@ -133,9 +135,9 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             showLogo(),
             showEmailInput(),
             showPasswordInput(),
+            showErrorMessage(),
             showPrimaryButton(),
             showSecondaryButton(),
-            showErrorMessage(),
           ],
         ),
       ),
@@ -235,13 +237,18 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   /// Constrói e retorna o [Widget] para mostrar a mensagem de erro.
   Widget showErrorMessage() {
     if (_errorMessage.length > 0 && _errorMessage != null) {
-      return new Text(
-        _errorMessage,
-        style: TextStyle(
-            fontSize: 13.0,
-            color: Colors.red,
-            height: 1.0,
-            fontWeight: FontWeight.w300),
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: Center(
+          child: new Text(
+            _errorMessage,
+            style: TextStyle(
+                fontSize: 13.0,
+                color: Colors.red,
+                height: 1.0,
+            ),
+          ),
+        ),
       );
     } else {
       return new Container(
